@@ -12,7 +12,7 @@ class ArticleInitial extends ArticleState {}
 class ArticleLoading extends ArticleState {}
 
 class ArticleLoaded extends ArticleState {
-  final List<Article> article;
+  final List<Articles> article;
 
   const ArticleLoaded({required this.article});
 }

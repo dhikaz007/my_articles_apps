@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                           image: state.article[index].image,
                           title: state.article[index].title,
                           content: state.article[index].content,
-                          createdAt: state.article[index].created.date,
+                          createdAt: state.article[index].created,
                         ),
                       );
                     } else {

@@ -3,13 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text.dart';
-import '../../logic/bloc/auth_bloc.dart';
-import '../../logic/cubit/passwordv_visibility_cubit.dart';
+import '../../logic/cubit/auth_cubit.dart';
+import '../../logic/cubit/password_visibility_cubit.dart';
 import '../home_page/home_main.dart';
 import 'widget/input_login_widget.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+
+  static const String userNameData = 'rachman.latif@gmail.com';
+  static const String passwordData = 'testing';
 
   static String userName = '';
   static String password = '';
@@ -20,7 +23,7 @@ class LoginPage extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: BlocListener<AuthBloc, AuthState>(
+      child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -76,17 +79,18 @@ class LoginPage extends StatelessWidget {
                     onChanged: (value) => userName = value,
                   ),
                   const SizedBox(height: 20),
-                  BlocBuilder<PasswordVisibilityCubit, PasswordVisibility>(
+                  BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
                     builder: (context, visibility) {
                       return InputLoginWidget(
                         title: 'Password',
-                        obscureText: visibility == PasswordVisibility.hidden,
+                        obscureText: !visibility.isVisible,
                         suffixIcon: IconButton(
                           onPressed: () => context
                               .read<PasswordVisibilityCubit>()
-                              .toggleVisibility(),
+                              .toggleVisibility(
+                                  isVisible: !visibility.isVisible),
                           icon: Icon(
-                            visibility == PasswordVisibility.hidden
+                            !visibility.isVisible
                                 ? Icons.visibility_off
                                 : Icons.visibility,
                             size: 24,
@@ -98,7 +102,7 @@ class LoginPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 32),
-                  BlocBuilder<AuthBloc, AuthState>(
+                  BlocBuilder<AuthCubit, AuthState>(
                     builder: (context, auth) {
                       if (auth is AuthLoading) {
                         return const Center(
@@ -120,16 +124,46 @@ class LoginPage extends StatelessWidget {
                                 EdgeInsets.all(20),
                               ),
                               backgroundColor: const MaterialStatePropertyAll(
-                                  AppColors.jadeJewel),
-                            ),
-                            onPressed: () => BlocProvider.of<AuthBloc>(context,
-                                    listen: false)
-                                .add(
-                              AuthLogin(
-                                userName: userName,
-                                password: password,
+                                AppColors.jadeJewel,
                               ),
                             ),
+                            onPressed: () {
+                              if (userName.contains(userNameData) &&
+                                  password.contains(passwordData)) {
+                                context.read<AuthCubit>().loginState(
+                                      userName: userName,
+                                      password: password,
+                                    );
+                              } else {
+                                if (userName.isEmpty || password.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: AppText(
+                                        context: context,
+                                        text: 'Field must not empty',
+                                        style: AppTextStyle.title3,
+                                        fontWeight: CustomFontWeight.medium,
+                                        color: AppColors.primaryWhite,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: AppText(
+                                        context: context,
+                                        text: 'Username or password not found',
+                                        style: AppTextStyle.title3,
+                                        fontWeight: CustomFontWeight.medium,
+                                        color: AppColors.primaryWhite,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
                             child: AppText(
                               context: context,
                               text: 'LOGIN',

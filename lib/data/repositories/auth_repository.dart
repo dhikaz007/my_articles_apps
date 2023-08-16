@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../dio_network/api_endpoint.dart';
 import '../dio_network/dio_network_auth.dart';
 
@@ -19,7 +17,6 @@ class AuthRepositoryImpl extends AuthRepository {
       password: password,
     );
     if (data.statusCode == 200) {
-      debugPrint('SHOW: ${data.statusCode}');
       return true;
     } else {
       return false;

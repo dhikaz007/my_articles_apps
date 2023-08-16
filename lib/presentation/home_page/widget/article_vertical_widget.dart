@@ -9,7 +9,7 @@ class ArticleVerticalWidget extends StatelessWidget {
   final String image;
   final String title;
   final String content;
-  final DateTime createdAt;
+  final String createdAt;
   const ArticleVerticalWidget({
     super.key,
     required this.image,
@@ -20,8 +20,8 @@ class ArticleVerticalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('d MMMM y,').add_Hms();
-    final dateString = dateFormat.format(createdAt);
+    final date = DateTime.parse(createdAt);
+    final dateFormat = DateFormat('d MMMM y,').add_Hms().format(date);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -85,7 +85,7 @@ class ArticleVerticalWidget extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: AppText(
                   context: context,
-                  text: dateString,
+                  text: dateFormat,
                   style: AppTextStyle.body1,
                   fontWeight: CustomFontWeight.normal,
                   color: AppColors.primaryBlack,
