@@ -42,6 +42,7 @@ flutter run
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 
 ## Video Capture
+https://github.com/dhikaz007/my_articles_apps/assets/37215014/c02ff3d3-e8d1-4a20-9d7e-0c2ed3e4eea9
 
 ## License
 This project is licensed under the [MIT License](https://github.com/dhikaz007/my_articles_apps/blob/master/LICENSE).
