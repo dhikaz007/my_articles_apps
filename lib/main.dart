@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-import 'presentation/login_page/login_main.dart';
+import 'routes/app_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +10,10 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
   runApp(
-    const MainApp(),
+    ModularApp(
+      module: AppRoutes(),
+      child: const MainApp(),
+    ),
   );
 }
 
@@ -24,9 +28,12 @@ class MainApp extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    return MaterialApp(
+    Modular.setInitialRoute('/login');
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      themeAnimationCurve: Curves.easeInOut,
       theme: ThemeData(fontFamily: 'Inter'),
-      home: const LoginMain(),
+      routerConfig: Modular.routerConfig,
     );
   }
 }

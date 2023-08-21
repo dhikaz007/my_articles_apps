@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final widthSize = MediaQuery.sizeOf(context).width;
     final heightSize = MediaQuery.sizeOf(context).height;
+    final user = Modular.args.data as String;
 
     return Scaffold(
       backgroundColor: AppColors.primaryWhite,
@@ -40,7 +42,7 @@ class HomePage extends StatelessWidget {
                   ),
                   AppText(
                     context: context,
-                    text: 'User',
+                    text: user,
                     style: AppTextStyle.title1,
                     fontWeight: CustomFontWeight.bold,
                     color: AppColors.primaryBlack,

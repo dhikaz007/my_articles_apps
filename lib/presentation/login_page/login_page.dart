@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text.dart';
 import '../../logic/cubit/auth_cubit.dart';
 import '../../logic/cubit/password_visibility_cubit.dart';
-import '../home_page/home_main.dart';
 import 'widget/input_login_widget.dart';
 
 class LoginPage extends StatelessWidget {
@@ -39,13 +39,7 @@ class LoginPage extends StatelessWidget {
               ),
             );
           } else if (state is AuthAuthenticated) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeMain(),
-              ),
-              (route) => false,
-            );
+            Modular.to.navigate('/home',arguments: userName);
           }
         },
         child: Scaffold(
@@ -85,7 +79,7 @@ class LoginPage extends StatelessWidget {
                         title: 'Password',
                         obscureText: !visibility.isVisible,
                         suffixIcon: IconButton(
-                          onPressed: () => context
+                          onPressed: () => ReadContext(context)
                               .read<PasswordVisibilityCubit>()
                               .toggleVisibility(
                                   isVisible: !visibility.isVisible),
@@ -130,7 +124,9 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {
                               if (userName.contains(userNameData) &&
                                   password.contains(passwordData)) {
-                                context.read<AuthCubit>().loginState(
+                                ReadContext(context)
+                                    .read<AuthCubit>()
+                                    .loginState(
                                       userName: userName,
                                       password: password,
                                     );
