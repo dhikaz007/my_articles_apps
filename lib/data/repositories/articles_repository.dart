@@ -44,12 +44,11 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
     List<Articles> dataArticles = [];
     final json = await DioNetworkArticles()
         .fetchArticles(endpoint: ApiEndpoint.articles);
-    final data = json.data;
-    if (data['articles'] != null) {
+    if (json.data['articles'] != null) {
       dataArticles =
-          (data['articles'] as List).map((e) => Articles.fromJson(e)).toList();
-      data['articles'] = dataArticles;
-      return ResponseAPI.fromJson(data);
+          (json.data['articles'] as List).map((e) => Articles.fromJson(e)).toList();
+      json.data['articles'] = dataArticles;
+      return ResponseAPI.fromJson(json.data);
     } else {
       return ResponseAPI(
         message: 'Error load data',

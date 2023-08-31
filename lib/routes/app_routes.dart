@@ -15,7 +15,7 @@ class AppRoutes extends Module {
     r.child(
       '/home',
       child: (_) => HomePage(
-        user: Modular.args.data,
+        user: r.args.data,
       ),
       transition: TransitionType.rightToLeft,
       duration: const Duration(milliseconds: 800),

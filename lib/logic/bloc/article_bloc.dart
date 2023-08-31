@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/model/articles.dart';
-//import '../../data/model/article_model.dart';
+//import '../../data/model/arti``cle_model.dart';
 import '../../data/repositories/articles_repository.dart';
 import '../../utils/utils.dart';
 
@@ -30,7 +30,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
         ResponseAPI<List<Articles>> responseAPI =
             await articlesRepositoryImpl.loadArticles();
         if (responseAPI.statusCode == 200) {
-          emit(ArticleLoaded(article: responseAPI.user ?? []));
+          emit(ArticleLoaded(article: responseAPI.data ?? []));
         } else {
           emit(ArticleError(errorMessage: responseAPI.message));
         }
