@@ -14,7 +14,7 @@ class HomeMain extends StatelessWidget {
       create: (context) => ArticleBloc(
         articlesRepositoryImpl: ArticlesRepositoryImpl(),
       )..add(
-          FetchArticle(),
+          GetArticle(),
         ),
       child: const HomePage(),
     );

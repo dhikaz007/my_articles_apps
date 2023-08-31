@@ -4,8 +4,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text.dart';
+import '../../data/model/user_credential.dart';
 import '../../logic/cubit/auth_cubit.dart';
 import '../../logic/cubit/password_visibility_cubit.dart';
+import '../../utils/utils.dart';
 import 'widget/input_login_widget.dart';
 
 class LoginPage extends StatelessWidget {
@@ -20,11 +22,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widthSize = MediaQuery.sizeOf(context).width;
+    final formKey = GlobalKey<FormState>();
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -39,7 +42,13 @@ class LoginPage extends StatelessWidget {
               ),
             );
           } else if (state is AuthAuthenticated) {
-            Modular.to.navigate('/home',arguments: userName);
+            String? accessToken = await TokenStoreges.getAccessToken();
+            if (accessToken != null) {
+              Future.delayed(
+                const Duration(seconds: 1),
+                () => Modular.to.navigate('/home', arguments: userName),
+              );
+            }
           }
         },
         child: Scaffold(
@@ -51,128 +60,144 @@ class LoginPage extends StatelessWidget {
                 left: 20,
                 right: 20,
               ),
-              child: Column(
-                children: [
-                  AppText(
-                    context: context,
-                    text: 'My Article Apps',
-                    style: AppTextStyle.display1,
-                    fontWeight: CustomFontWeight.bold,
-                    color: AppColors.jadeJewel,
-                  ),
-                  const SizedBox(height: 20),
-                  Image.asset(
-                    'assets/png/logo.png',
-                    width: widthSize,
-                    height: 300,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(height: 20),
-                  InputLoginWidget(
-                    title: 'Username',
-                    onChanged: (value) => userName = value,
-                  ),
-                  const SizedBox(height: 20),
-                  BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
-                    builder: (context, visibility) {
-                      return InputLoginWidget(
-                        title: 'Password',
-                        obscureText: !visibility.isVisible,
-                        suffixIcon: IconButton(
-                          onPressed: () => ReadContext(context)
-                              .read<PasswordVisibilityCubit>()
-                              .toggleVisibility(
-                                  isVisible: !visibility.isVisible),
-                          icon: Icon(
-                            !visibility.isVisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            size: 24,
-                            color: AppColors.jadeJewel,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    AppText(
+                      context: context,
+                      text: 'My Article Apps',
+                      style: AppTextStyle.display1,
+                      fontWeight: CustomFontWeight.bold,
+                      color: AppColors.jadeJewel,
+                    ),
+                    const SizedBox(height: 20),
+                    Image.asset(
+                      'assets/png/logo.png',
+                      width: widthSize,
+                      height: 300,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 20),
+                    InputLoginWidget(
+                      title: 'Username',
+                      onChanged: (value) => userName = value,
+                    ),
+                    const SizedBox(height: 20),
+                    BlocBuilder<PasswordVisibilityCubit,
+                        PasswordVisibilityState>(
+                      builder: (context, visibility) {
+                        return InputLoginWidget(
+                          title: 'Password',
+                          obscureText: !visibility.isVisible,
+                          suffixIcon: IconButton(
+                            onPressed: () => ReadContext(context)
+                                .read<PasswordVisibilityCubit>()
+                                .toggleVisibility(
+                                    isVisible: !visibility.isVisible),
+                            icon: Icon(
+                              !visibility.isVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              size: 24,
+                              color: AppColors.jadeJewel,
+                            ),
                           ),
-                        ),
-                        onChanged: (value) => password = value,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 32),
-                  BlocBuilder<AuthCubit, AuthState>(
-                    builder: (context, auth) {
-                      if (auth is AuthLoading) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.jadeJewel,
-                          ),
+                          onChanged: (value) => password = value,
                         );
-                      } else {
-                        return SizedBox(
-                          width: widthSize,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, auth) {
+                        if (auth is AuthLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.jadeJewel,
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            width: widthSize,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                padding: const MaterialStatePropertyAll(
+                                  EdgeInsets.all(20),
+                                ),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                  AppColors.jadeJewel,
                                 ),
                               ),
-                              padding: const MaterialStatePropertyAll(
-                                EdgeInsets.all(20),
-                              ),
-                              backgroundColor: const MaterialStatePropertyAll(
-                                AppColors.jadeJewel,
-                              ),
-                            ),
-                            onPressed: () {
-                              if (userName.contains(userNameData) &&
-                                  password.contains(passwordData)) {
-                                ReadContext(context)
-                                    .read<AuthCubit>()
-                                    .loginState(
-                                      userName: userName,
-                                      password: password,
-                                    );
-                              } else {
-                                if (userName.isEmpty || password.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: AppText(
-                                        context: context,
-                                        text: 'Field must not empty',
-                                        style: AppTextStyle.title3,
-                                        fontWeight: CustomFontWeight.medium,
-                                        color: AppColors.primaryWhite,
-                                      ),
-                                    ),
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  UserCredential userCredential =
+                                      UserCredential(
+                                    email: userName,
+                                    password: password,
                                   );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: AppText(
-                                        context: context,
-                                        text: 'Username or password not found',
-                                        style: AppTextStyle.title3,
-                                        fontWeight: CustomFontWeight.medium,
-                                        color: AppColors.primaryWhite,
-                                      ),
-                                    ),
-                                  );
+                                  ReadContext(context)
+                                      .read<AuthCubit>()
+                                      .loginEmailandPassword(
+                                          userCredential: userCredential);
                                 }
-                              }
-                            },
-                            child: AppText(
-                              context: context,
-                              text: 'LOGIN',
-                              style: AppTextStyle.title2,
-                              fontWeight: CustomFontWeight.medium,
-                              color: AppColors.primaryWhite,
+                                // if (userName.contains(userNameData) &&
+                                //     password.contains(passwordData)) {
+                                //   ReadContext(context)
+                                //       .read<AuthCubit>()
+                                //       .loginState(
+                                //         userName: userName,
+                                //         password: password,
+                                //       );
+                                // } else {
+                                //   if (userName.isEmpty || password.isEmpty) {
+                                //     ScaffoldMessenger.of(context).showSnackBar(
+                                //       SnackBar(
+                                //         backgroundColor: Colors.red,
+                                //         content: AppText(
+                                //           context: context,
+                                //           text: 'Field must not empty',
+                                //           style: AppTextStyle.title3,
+                                //           fontWeight: CustomFontWeight.medium,
+                                //           color: AppColors.primaryWhite,
+                                //         ),
+                                //       ),
+                                //     );
+                                //   } else {
+                                //     ScaffoldMessenger.of(context).showSnackBar(
+                                //       SnackBar(
+                                //         backgroundColor: Colors.red,
+                                //         content: AppText(
+                                //           context: context,
+                                //           text:
+                                //               'Username or password not found',
+                                //           style: AppTextStyle.title3,
+                                //           fontWeight: CustomFontWeight.medium,
+                                //           color: AppColors.primaryWhite,
+                                //         ),
+                                //       ),
+                                //     );
+                                //   }
+                                // }
+                              },
+                              child: AppText(
+                                context: context,
+                                text: 'LOGIN',
+                                style: AppTextStyle.title2,
+                                fontWeight: CustomFontWeight.medium,
+                                color: AppColors.primaryWhite,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ],
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

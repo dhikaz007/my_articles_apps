@@ -1,3 +1,4 @@
+import '../../utils/utils.dart';
 import '../dio_network/api_endpoint.dart';
 import '../dio_network/dio_network_articles.dart';
 import '../model/articles.dart';
@@ -6,6 +7,7 @@ import '../model/article_model.dart';
 abstract class ArticlesRepository {
   Future<List<Article>> fetchArticles();
   Future<List<Articles>> getArticles();
+  Future<ResponseAPI<List<Articles>>> loadArticles();
 }
 
 class ArticlesRepositoryImpl extends ArticlesRepository {
@@ -33,6 +35,26 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
       return data;
     } else {
       return [];
+    }
+  }
+
+  //* For method ResponseAPI
+  @override
+  Future<ResponseAPI<List<Articles>>> loadArticles() async {
+    List<Articles> dataArticles = [];
+    final json = await DioNetworkArticles()
+        .fetchArticles(endpoint: ApiEndpoint.articles);
+    final data = json.data;
+    if (data['articles'] != null) {
+      dataArticles =
+          (data['articles'] as List).map((e) => Articles.fromJson(e)).toList();
+      data['articles'] = dataArticles;
+      return ResponseAPI.fromJson(data);
+    } else {
+      return ResponseAPI(
+        message: 'Error load data',
+        statusCode: 500,
+      );
     }
   }
 }

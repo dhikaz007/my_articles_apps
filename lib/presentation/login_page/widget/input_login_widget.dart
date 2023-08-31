@@ -18,7 +18,7 @@ class InputLoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       keyboardType: TextInputType.emailAddress,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: AppColors.jadeJewel,

@@ -8,3 +8,6 @@ abstract class ArticleEvent extends Equatable {
 }
 
 class FetchArticle extends ArticleEvent {}
+
+//* For method ResponseAPI
+class GetArticle extends ArticleEvent {}
