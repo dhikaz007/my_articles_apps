@@ -13,7 +13,8 @@ class PasswordVisibilityCubit extends Cubit<PasswordVisibilityState> {
     emit(PasswordVisibilityState(isVisible: isVisible));
   }
 
-  // void toggleVisibility() {
+  //* Method 2 using enum to state
+  // void toggleVisibilityIcon() {
   //   emit(
   //     state == PasswordVisibility.hidden
   //         ? PasswordVisibility.visible

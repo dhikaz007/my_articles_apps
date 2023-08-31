@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: auto_injector
-      sha256: "2b0a076df2dd300ba3acfc270653f351fadf4d7889f042cd853f80ac83661af7"
+      sha256: a715862b587c518c81d7275044d4c1e6237ab1ccb921171a544dce04c6f771ca
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "2.0.0+2"
   bloc:
     dependency: transitive
     description:
@@ -113,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  fake_reflection:
+    dependency: transitive
+    description:
+      name: fake_reflection
+      sha256: "3e0fff7d8d60f0935a620904a1e6978e024df5fee8b710f37355166df00be506"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   ffi:
     dependency: transitive
     description:
@@ -170,10 +178,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_modular
-      sha256: "0d50176ce394b792b447ee1c73e51e60c42b028a07b1974f3930f962c5f5e933"
+      sha256: "263d38c90a27cc2fdb1d017da9f63eb60493611173570f0d55de9b9b47871a5d"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.4+1"
+    version: "6.1.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -244,10 +252,10 @@ packages:
     dependency: transitive
     description:
       name: modular_core
-      sha256: fbcc3683dedbe0ccd1d75636c94c057b56c5ec4e068cc0ac40cefd5ba27c109c
+      sha256: "4890062d8cca59b16cffa5ae4c4dad236120f89ce00c4df5008eb8cad09fe233"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.3+1"
+    version: "3.1.1"
   nested:
     dependency: transitive
     description:
@@ -352,6 +360,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  responsive_sizer:
+    dependency: "direct main"
+    description:
+      name: responsive_sizer
+      sha256: "206d1f77f65ed8394ef2a526583e38e874ee36f036f3fe9aefb0f58ecba9bef9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   result_dart:
     dependency: transitive
     description:
@@ -372,10 +388,10 @@ packages:
     dependency: "direct main"
     description:
       name: shared_preferences
-      sha256: "0344316c947ffeb3a529eac929e1978fcd37c26be4e8468628bac399365a3ca1"
+      sha256: b7f41bad7e521d205998772545de63ff4e6c97714775902c199353f8bf1511ac
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   shared_preferences_android:
     dependency: transitive
     description:
@@ -551,4 +567,4 @@ packages:
     version: "1.0.2"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=3.13.0"
+  flutter: ">=3.7.0"

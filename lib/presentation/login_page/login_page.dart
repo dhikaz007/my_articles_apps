@@ -35,9 +35,10 @@ class LoginPage extends StatelessWidget {
                 content: AppText(
                   context: context,
                   text: state.errorMessage,
-                  style: AppTextStyle.title1,
+                  style: AppTextStyle.title3,
                   fontWeight: CustomFontWeight.medium,
                   color: AppColors.primaryBlack,
+                  maxLines: 2,
                 ),
               ),
             );

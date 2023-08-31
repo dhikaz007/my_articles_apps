@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 import '../../utils/utils.dart';
 import '../dio_network/api_endpoint.dart';
@@ -33,15 +33,29 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<ResponseAPI> loginEmailandPassword(
       {required UserCredential userCredential}) async {
-    final response = await DioNetworkAuth().loginWithEmailPassword(
-      endpoint: ApiEndpoint.login,
-      userCredential: userCredential,
-    );
-    if (response.statusCode == 200) {
-      debugPrint('AUTH RESPONSE: ${ResponseAPI<Map<String,dynamic>>.fromJson(response.data).toString()}');
-      return ResponseAPI<Map<String,dynamic>>.fromJson(response.data);
-    } else {
-      return ResponseAPI(message: response.statusCode.toString());
+    try {
+      final response = await DioNetworkAuth().loginWithEmailPassword(
+        endpoint: ApiEndpoint.login,
+        userCredential: userCredential,
+      );
+      return ResponseAPI<Map<String, dynamic>>.fromJson(response.data);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        return ResponseAPI(
+          message: e.response?.data['message'],
+          statusCode: 400,
+        );
+      } else {
+        return ResponseAPI(
+          message: "There's something wrong, please try again later",
+          statusCode: 500,
+        );
+      }
+    } catch (e) {
+      return ResponseAPI(
+        message: "There's something wrong, please try again later",
+        statusCode: 500,
+      );
     }
   }
 }
