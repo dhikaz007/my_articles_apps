@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import '../../utils/utils.dart';
@@ -44,6 +46,7 @@ class AuthRepositoryImpl extends AuthRepository {
         return ResponseAPI(
           message: e.response?.data['message'],
           statusCode: 400,
+          error: jsonEncode(e.response?.data['errors']),
         );
       } else {
         return ResponseAPI(

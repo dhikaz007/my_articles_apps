@@ -17,7 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
       final isLogin = await authRepositoryImpl.login(
           username: userName, password: password);
       if (isLogin == true) {
-        //emit(AuthAuthenticated());
+        emit(const AuthAuthenticated(message: 'Login Successfull'));
       } else {
         emit(const AuthError(
             errorMessage: 'Login failed. Please check your credentials'));
@@ -38,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         await TokenStoreges.setAccessToken(
             token: 'lsGPLl4k6Vc4J0VhnFaMBqetNtn1ofsB');
-        emit(AuthAuthenticated());
+        emit(AuthAuthenticated(message: responseAPI.message));
       }
     } catch (e) {
       emit(AuthError(errorMessage: e.toString()));

@@ -26,179 +26,149 @@ class LoginPage extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) async {
-          if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.red,
-                content: AppText(
-                  context: context,
-                  text: state.errorMessage,
-                  style: AppTextStyle.title3,
-                  fontWeight: CustomFontWeight.medium,
-                  color: AppColors.primaryBlack,
-                  maxLines: 2,
-                ),
-              ),
-            );
-          } else if (state is AuthAuthenticated) {
-            String? accessToken = await TokenStoreges.getAccessToken();
-            if (accessToken != null) {
-              Future.delayed(
-                const Duration(seconds: 1),
-                () => Modular.to.navigate('/home', arguments: userName),
-              );
-            }
-          }
-        },
-        child: Scaffold(
-          backgroundColor: AppColors.primaryWhite,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              reverse: true,
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-              ),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    AppText(
-                      context: context,
-                      text: 'My Article Apps',
-                      style: AppTextStyle.display1,
-                      fontWeight: CustomFontWeight.bold,
-                      color: AppColors.jadeJewel,
-                    ),
-                    const SizedBox(height: 20),
-                    Image.asset(
-                      'assets/png/logo.png',
-                      width: widthSize,
-                      height: 300,
-                      fit: BoxFit.fill,
-                    ),
-                    const SizedBox(height: 20),
-                    InputLoginWidget(
-                      title: 'Username',
-                      onChanged: (value) => userName = value,
-                    ),
-                    const SizedBox(height: 20),
-                    BlocBuilder<PasswordVisibilityCubit,
-                        PasswordVisibilityState>(
-                      builder: (context, visibility) {
-                        return InputLoginWidget(
-                          title: 'Password',
-                          obscureText: !visibility.isVisible,
-                          suffixIcon: IconButton(
-                            onPressed: () => ReadContext(context)
-                                .read<PasswordVisibilityCubit>()
-                                .toggleVisibility(
-                                    isVisible: !visibility.isVisible),
-                            icon: Icon(
-                              !visibility.isVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              size: 24,
-                              color: AppColors.jadeJewel,
-                            ),
+      child: Scaffold(
+        backgroundColor: AppColors.primaryWhite,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            reverse: true,
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  AppText(
+                    context: context,
+                    text: 'My Article Apps',
+                    style: AppTextStyle.display1,
+                    fontWeight: CustomFontWeight.bold,
+                    color: AppColors.jadeJewel,
+                  ),
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    'assets/png/logo.png',
+                    width: widthSize,
+                    height: 300,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 20),
+                  InputLoginWidget(
+                    title: 'Username',
+                    onChanged: (value) => userName = value,
+                  ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
+                    builder: (context, visibility) {
+                      return InputLoginWidget(
+                        title: 'Password',
+                        obscureText: !visibility.isVisible,
+                        suffixIcon: IconButton(
+                          onPressed: () => ReadContext(context)
+                              .read<PasswordVisibilityCubit>()
+                              .toggleVisibility(
+                                  isVisible: !visibility.isVisible),
+                          icon: Icon(
+                            !visibility.isVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            size: 24,
+                            color: AppColors.jadeJewel,
                           ),
-                          onChanged: (value) => password = value,
+                        ),
+                        onChanged: (value) => password = value,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 32),
+                  BlocListener<AuthCubit, AuthState>(
+                    listener: (context, auth) async {
+                      if (auth is AuthLoading) {
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.jadeJewel,
+                          ),
                         );
-                      },
-                    ),
-                    const SizedBox(height: 32),
-                    BlocBuilder<AuthCubit, AuthState>(
-                      builder: (context, auth) {
-                        if (auth is AuthLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.jadeJewel,
-                            ),
-                          );
-                        } else {
-                          return SizedBox(
-                            width: widthSize,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                shape: MaterialStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
+                      } else if (auth is AuthAuthenticated) {
+                        String? accessToken =
+                            await TokenStoreges.getAccessToken();
+                        if (accessToken != null) {
+                          Future.delayed(
+                            const Duration(seconds: 1),
+                            () => Modular.to
+                                .navigate('/home', arguments: userName),
+                          ).then(
+                            (_) => ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.green,
+                                content: AppText(
+                                  context: context,
+                                  text: auth.message,
+                                  style: AppTextStyle.title3,
+                                  fontWeight: CustomFontWeight.medium,
+                                  color: AppColors.primaryBlack,
+                                  maxLines: 2,
                                 ),
-                                padding: const MaterialStatePropertyAll(
-                                  EdgeInsets.all(20),
-                                ),
-                                backgroundColor: const MaterialStatePropertyAll(
-                                  AppColors.jadeJewel,
-                                ),
-                              ),
-                              onPressed: () {
-                                if (formKey.currentState!.validate()) {
-                                  UserCredential userCredential =
-                                      UserCredential(
-                                    email: userName,
-                                    password: password,
-                                  );
-                                  ReadContext(context)
-                                      .read<AuthCubit>()
-                                      .loginEmailandPassword(
-                                          userCredential: userCredential);
-                                }
-                                // if (userName.contains(userNameData) &&
-                                //     password.contains(passwordData)) {
-                                //   ReadContext(context)
-                                //       .read<AuthCubit>()
-                                //       .loginState(
-                                //         userName: userName,
-                                //         password: password,
-                                //       );
-                                // } else {
-                                //   if (userName.isEmpty || password.isEmpty) {
-                                //     ScaffoldMessenger.of(context).showSnackBar(
-                                //       SnackBar(
-                                //         backgroundColor: Colors.red,
-                                //         content: AppText(
-                                //           context: context,
-                                //           text: 'Field must not empty',
-                                //           style: AppTextStyle.title3,
-                                //           fontWeight: CustomFontWeight.medium,
-                                //           color: AppColors.primaryWhite,
-                                //         ),
-                                //       ),
-                                //     );
-                                //   } else {
-                                //     ScaffoldMessenger.of(context).showSnackBar(
-                                //       SnackBar(
-                                //         backgroundColor: Colors.red,
-                                //         content: AppText(
-                                //           context: context,
-                                //           text:
-                                //               'Username or password not found',
-                                //           style: AppTextStyle.title3,
-                                //           fontWeight: CustomFontWeight.medium,
-                                //           color: AppColors.primaryWhite,
-                                //         ),
-                                //       ),
-                                //     );
-                                //   }
-                                // }
-                              },
-                              child: AppText(
-                                context: context,
-                                text: 'LOGIN',
-                                style: AppTextStyle.title2,
-                                fontWeight: CustomFontWeight.medium,
-                                color: AppColors.primaryWhite,
                               ),
                             ),
                           );
                         }
-                      },
+                      } else if (auth is AuthError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: AppText(
+                              context: context,
+                              text: auth.errorMessage,
+                              style: AppTextStyle.title3,
+                              fontWeight: CustomFontWeight.medium,
+                              color: AppColors.primaryBlack,
+                              maxLines: 2,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: SizedBox(
+                      width: widthSize,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          padding: const MaterialStatePropertyAll(
+                            EdgeInsets.all(20),
+                          ),
+                          backgroundColor: const MaterialStatePropertyAll(
+                            AppColors.jadeJewel,
+                          ),
+                        ),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            UserCredential userCredential = UserCredential(
+                              email: userName,
+                              password: password,
+                            );
+                            ReadContext(context)
+                                .read<AuthCubit>()
+                                .loginEmailandPassword(
+                                    userCredential: userCredential);
+                          }
+                        },
+                        child: AppText(
+                          context: context,
+                          text: 'LOGIN',
+                          style: AppTextStyle.title2,
+                          fontWeight: CustomFontWeight.medium,
+                          color: AppColors.primaryWhite,
+                        ),
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
