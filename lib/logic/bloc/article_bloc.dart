@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/model/articles.dart';
-//import '../../data/model/arti``cle_model.dart';
-import '../../data/repositories/articles_repository.dart';
+import '../../data/model/model.dart';
+import '../../data/repositories/repositories.dart';
 import '../../utils/utils.dart';
 
 part 'article_event.dart';

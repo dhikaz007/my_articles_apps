@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-
-import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_text.dart';
-import '../../core/localizations/app_localizations.dart';
-import '../../data/model/language.dart';
-import '../../logic/cubit/language_cubit.dart';
-import 'widgets/language_item.dart';
+part of 'screens.dart';
 
 class SelectLanguagePage extends StatelessWidget {
   const SelectLanguagePage({super.key});

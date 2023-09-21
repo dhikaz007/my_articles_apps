@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'constants.dart';
 
 class AppColors {
   static const windSpeed = Color(0XFFBED7DA);

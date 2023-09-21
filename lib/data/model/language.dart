@@ -1,3 +1,5 @@
+part of 'model.dart';
+
 class Language {
   final String title;
   final String lang;

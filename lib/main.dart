@@ -6,14 +6,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'core/localizations/app_localizations.dart';
-import 'data/repositories/articles_repository.dart';
-import 'data/repositories/auth_repository.dart';
+import 'data/repositories/repositories.dart';
 import 'logic/bloc/article_bloc.dart';
 import 'logic/cubit/auth_cubit.dart';
 import 'logic/cubit/language_cubit.dart';
 import 'logic/cubit/password_visibility_cubit.dart';
-import 'presentation/login_page/login_page.dart';
-import 'routes/app_routes.dart';
+import 'presentation/login_page/screens.dart';
+import 'routes/routes.dart';
 import 'utils/utils.dart';
 
 void main() async {

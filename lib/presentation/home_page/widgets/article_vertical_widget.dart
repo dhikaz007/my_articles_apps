@@ -1,11 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:translator/translator.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_text.dart';
-import '../../../widgets/rectangle_shimmer.dart';
+part of 'widgets.dart';
 
 class ArticleVerticalWidget extends StatelessWidget {
   final String image;

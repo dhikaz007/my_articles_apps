@@ -1,3 +1,5 @@
+part of 'model.dart';
+
 class UserCredential {
   final String email;
   final String password;
@@ -14,8 +16,8 @@ class UserCredential {
 
   toJson() {
     return {
-      'email':email,
-      'password':password,
+      'email': email,
+      'password': password,
     };
   }
 }

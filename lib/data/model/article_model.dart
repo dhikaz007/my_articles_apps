@@ -2,7 +2,7 @@
 //
 //     final articleModel = articleModelFromJson(jsonString);
 
-import 'dart:convert';
+part of 'model.dart';
 
 ArticleModel articleModelFromJson(String str) =>
     ArticleModel.fromJson(json.decode(str));

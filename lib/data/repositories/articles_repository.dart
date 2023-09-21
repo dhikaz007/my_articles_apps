@@ -1,8 +1,4 @@
-import '../../utils/utils.dart';
-import '../dio_network/api_endpoint.dart';
-import '../dio_network/dio_network_articles.dart';
-import '../model/articles.dart';
-import '../model/article_model.dart';
+part of 'repositories.dart';
 
 abstract class ArticlesRepository {
   Future<List<Article>> fetchArticles();
@@ -45,8 +41,9 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
     final json = await DioNetworkArticles()
         .fetchArticles(endpoint: ApiEndpoint.articles);
     if (json.data['articles'] != null) {
-      dataArticles =
-          (json.data['articles'] as List).map((e) => Articles.fromJson(e)).toList();
+      dataArticles = (json.data['articles'] as List)
+          .map((e) => Articles.fromJson(e))
+          .toList();
       json.data['articles'] = dataArticles;
       return ResponseAPI.fromJson(json.data);
     } else {

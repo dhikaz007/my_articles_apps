@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_text.dart';
+part of 'widgets.dart';
 
 class LanguageItem extends StatelessWidget {
   final String title;

@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
-
-import 'dio_network.dart';
+part of 'network_services.dart';
 
 class DioNetworkArticles {
   Future<Response> getArticles({required String endpoint}) async {

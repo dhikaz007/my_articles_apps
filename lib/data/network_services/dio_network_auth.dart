@@ -1,7 +1,4 @@
-import 'package:dio/dio.dart';
-
-import '../model/user_credential.dart';
-import 'dio_network.dart';
+part of 'network_services.dart';
 
 class DioNetworkAuth {
   Future<Response> createUser({

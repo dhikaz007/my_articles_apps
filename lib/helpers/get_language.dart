@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../utils/utils.dart';
+part of 'helpers.dart';
 
 class GetLanguage {
   static Future<String> currentLanguage() async {

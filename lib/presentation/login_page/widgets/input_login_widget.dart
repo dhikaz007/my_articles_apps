@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_text.dart';
+part of 'widgets.dart';
 
 class InputLoginWidget extends StatelessWidget {
   final String title;

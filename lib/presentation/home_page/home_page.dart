@@ -1,16 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_text.dart';
-import '../../core/localizations/app_localizations.dart';
-import '../../helpers/get_language.dart';
-import '../../logic/bloc/article_bloc.dart';
-import '../../widgets/rectangle_shimmer.dart';
-import 'widget/article_horizontal_widget.dart';
-import 'widget/article_vertical_widget.dart';
+part of 'screens.dart';
 
 class HomePage extends StatefulWidget {
   final String user;

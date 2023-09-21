@@ -1,11 +1,4 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-
-import '../../utils/utils.dart';
-import '../dio_network/api_endpoint.dart';
-import '../dio_network/dio_network_auth.dart';
-import '../model/user_credential.dart';
+part of 'repositories.dart';
 
 abstract class AuthRepository {
   Future<bool> login({required String username, required String password});

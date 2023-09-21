@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+part of 'network_services.dart';
 
 class DioNetwork {
   static const String _baseUrl = 'https://demo.treblle.com/api/v1';

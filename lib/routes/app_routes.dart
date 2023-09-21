@@ -1,8 +1,4 @@
-import 'package:flutter_modular/flutter_modular.dart';
-
-import '../presentation/home_page/home_page.dart';
-import '../presentation/language/select_language_page.dart';
-import '../presentation/login_page/login_page.dart';
+part of 'routes.dart';
 
 class AppRoutes extends Module {
   @override

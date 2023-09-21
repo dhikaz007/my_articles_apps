@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-
-import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_text.dart';
-import '../../core/localizations/app_localizations.dart';
-import '../../data/model/user_credential.dart';
-import '../../logic/cubit/auth_cubit.dart';
-import '../../logic/cubit/password_visibility_cubit.dart';
-import '../../utils/utils.dart';
-import 'widget/input_login_widget.dart';
+part of 'screens.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

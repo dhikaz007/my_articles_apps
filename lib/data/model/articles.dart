@@ -1,5 +1,7 @@
 //* Model JSON without generator
 
+part of 'model.dart';
+
 class Articles {
   final String title;
   final String content;
