@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../presentation/home_page/home_page.dart';
+import '../presentation/language/select_language_page.dart';
 import '../presentation/login_page/login_page.dart';
 
 class AppRoutes extends Module {
@@ -17,6 +18,12 @@ class AppRoutes extends Module {
       child: (_) => HomePage(
         user: r.args.data,
       ),
+      transition: TransitionType.rightToLeft,
+      duration: const Duration(milliseconds: 800),
+    );
+    r.child(
+      '/select-language',
+      child: (_) => const SelectLanguagePage(),
       transition: TransitionType.rightToLeft,
       duration: const Duration(milliseconds: 800),
     );

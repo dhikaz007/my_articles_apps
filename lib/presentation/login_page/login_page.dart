@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text.dart';
+import '../../core/localizations/app_localizations.dart';
 import '../../data/model/user_credential.dart';
 import '../../logic/cubit/auth_cubit.dart';
 import '../../logic/cubit/password_visibility_cubit.dart';
@@ -41,7 +42,7 @@ class LoginPage extends StatelessWidget {
                 children: [
                   AppText(
                     context: context,
-                    text: 'My Article Apps',
+                    text: '${AppLocalizations.of(context)?.titleApps}',
                     style: AppTextStyle.display1,
                     fontWeight: CustomFontWeight.bold,
                     color: AppColors.jadeJewel,
@@ -55,14 +56,14 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   InputLoginWidget(
-                    title: 'Username',
+                    title: '${AppLocalizations.of(context)?.username}',
                     onChanged: (value) => userName = value,
                   ),
                   const SizedBox(height: 20),
                   BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
                     builder: (context, visibility) {
                       return InputLoginWidget(
-                        title: 'Password',
+                        title: '${AppLocalizations.of(context)?.password}',
                         obscureText: !visibility.isVisible,
                         suffixIcon: IconButton(
                           onPressed: () => ReadContext(context)
@@ -160,7 +161,8 @@ class LoginPage extends StatelessWidget {
                         },
                         child: AppText(
                           context: context,
-                          text: 'LOGIN',
+                          text:
+                              '${AppLocalizations.of(context)?.login.toUpperCase()}',
                           style: AppTextStyle.title2,
                           fontWeight: CustomFontWeight.medium,
                           color: AppColors.primaryWhite,
