@@ -21,8 +21,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
 
-  static const String userNameData = 'rachman.latif@gmail.com';
-  static const String passwordData = 'testing';
+  // static const String userNameData = 'rachman.latif@gmail.com';
+  // static const String passwordData = 'testing';
 
   static String userName = '';
   static String password = '';
@@ -154,9 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onPressed: () {
-                          if (formKey.currentState!.validate() &&
-                              userName.contains(userNameData) &&
-                              password.contains(passwordData)) {
+                          if (formKey.currentState!.validate()) {
                             UserCredential userCredential = UserCredential(
                               email: userName,
                               password: password,

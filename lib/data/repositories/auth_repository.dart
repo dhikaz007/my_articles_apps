@@ -40,6 +40,9 @@ class AuthRepositoryImpl extends AuthRepository {
         endpoint: ApiEndpoint.login,
         userCredential: userCredential,
       );
+      if (response.data['code'] != 200 && response.data['status'] != true) {
+        return ResponseAPI(message: response.data['message']);
+      }
       return ResponseAPI<Map<String, dynamic>>.fromJson(response.data);
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
@@ -56,7 +59,7 @@ class AuthRepositoryImpl extends AuthRepository {
       }
     } catch (e) {
       return ResponseAPI(
-        message: "There's something wrong, please try again later",
+        message: e.toString(),
         statusCode: 500,
       );
     }
