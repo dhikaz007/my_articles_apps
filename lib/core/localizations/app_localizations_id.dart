@@ -21,10 +21,4 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Pilih Bahasa';
-
-  @override
-  String get latin => 'Latin';
-
-  @override
-  String get english => 'Bahasa Inggris';
 }

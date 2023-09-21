@@ -21,10 +21,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Select Language';
-
-  @override
-  String get latin => 'Latin';
-
-  @override
-  String get english => 'English';
 }

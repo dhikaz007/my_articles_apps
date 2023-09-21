@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:translator/translator.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text.dart';
+import '../../../widgets/rectangle_shimmer.dart';
 
 class ArticleHorizontalWidget extends StatelessWidget {
   final String title;
@@ -28,23 +30,61 @@ class ArticleHorizontalWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText(
-              context: context,
-              text: title,
-              style: AppTextStyle.title2,
-              fontWeight: CustomFontWeight.bold,
-              color: AppColors.jadeJewel,
-              overflow: TextOverflow.ellipsis,
+            FutureBuilder(
+              future: GoogleTranslator().translate(title, to: 'en'),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const RectangleShimmer();
+                } else {
+                  if (snapshot.hasData) {
+                    return AppText(
+                      context: context,
+                      text: snapshot.data?.text ?? '-',
+                      style: AppTextStyle.title2,
+                      fontWeight: CustomFontWeight.bold,
+                      color: AppColors.jadeJewel,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  }
+                  return AppText(
+                    context: context,
+                    text: 'Data empty',
+                    style: AppTextStyle.title3,
+                    fontWeight: CustomFontWeight.medium,
+                    color: AppColors.primaryBlack,
+                  );
+                }
+              },
             ),
             const SizedBox(height: 8),
-            AppText(
-              context: context,
-              text: content,
-              style: AppTextStyle.body1,
-              fontWeight: CustomFontWeight.normal,
-              color: AppColors.primaryBlack,
-              maxLines: 8,
-              textAlign: TextAlign.left,
+            FutureBuilder(
+              future: GoogleTranslator().translate(content, to: 'en'),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const RectangleShimmer(
+                    h: 120,
+                  );
+                } else {
+                  if (snapshot.hasData) {
+                    return AppText(
+                      context: context,
+                      text: snapshot.data?.text ?? '-',
+                      style: AppTextStyle.body1,
+                      fontWeight: CustomFontWeight.normal,
+                      color: AppColors.primaryBlack,
+                      maxLines: 8,
+                      textAlign: TextAlign.left,
+                    );
+                  }
+                  return AppText(
+                    context: context,
+                    text: 'Data empty',
+                    style: AppTextStyle.title3,
+                    fontWeight: CustomFontWeight.normal,
+                    color: AppColors.primaryBlack,
+                  );
+                }
+              },
             ),
           ],
         ),

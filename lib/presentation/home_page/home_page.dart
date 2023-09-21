@@ -8,6 +8,7 @@ import '../../core/constants/app_text.dart';
 import '../../core/localizations/app_localizations.dart';
 import '../../helpers/get_language.dart';
 import '../../logic/bloc/article_bloc.dart';
+import '../../widgets/rectangle_shimmer.dart';
 import 'widget/article_horizontal_widget.dart';
 import 'widget/article_vertical_widget.dart';
 
@@ -79,9 +80,15 @@ class _HomePageState extends State<HomePage> {
                 child: BlocBuilder<ArticleBloc, ArticleState>(
                   builder: (context, state) {
                     if (state is ArticleLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                            color: AppColors.jadeJewel),
+                      return ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 20),
+                        itemBuilder: (context, index) => const RectangleShimmer(
+                          w: 220,
+                          h: 180,
+                        ),
                       );
                     } else if (state is ArticleLoaded) {
                       return ListView.builder(
@@ -107,9 +114,14 @@ class _HomePageState extends State<HomePage> {
                 child: BlocBuilder<ArticleBloc, ArticleState>(
                   builder: (context, state) {
                     if (state is ArticleLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                            color: AppColors.jadeJewel),
+                      return ListView.separated(
+                        itemCount: 3,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 20),
+                        itemBuilder: (context, index) => const RectangleShimmer(
+                          w: double.maxFinite,
+                          h: 220,
+                        ),
                       );
                     } else if (state is ArticleLoaded) {
                       return ListView.builder(

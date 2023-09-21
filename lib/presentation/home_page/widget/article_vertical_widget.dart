@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:translator/translator.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text.dart';
+import '../../../widgets/rectangle_shimmer.dart';
 
 class ArticleVerticalWidget extends StatelessWidget {
   final String image;
@@ -40,7 +42,7 @@ class ArticleVerticalWidget extends StatelessWidget {
             children: [
               Wrap(
                 spacing: 8,
-                crossAxisAlignment: WrapCrossAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -48,50 +50,109 @@ class ArticleVerticalWidget extends StatelessWidget {
                       imageUrl: image,
                       width: 100,
                       height: 100,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(
-                            color: AppColors.jadeJewel),
-                      ),
+                      placeholder: (context, url) {
+                        if (url.isNotEmpty) {
+                          return const RectangleShimmer();
+                        }
+                        return AppText(
+                          context: context,
+                          text: 'NO IMAGE',
+                          style: AppTextStyle.title3,
+                          fontWeight: CustomFontWeight.bold,
+                          color: AppColors.blueFlax,
+                        );
+                      },
                     ),
                   ),
                   SizedBox(
                     width: 220,
-                    height: 80,
-                    child: AppText(
-                      context: context,
-                      text: title,
-                      style: AppTextStyle.title3,
-                      fontWeight: CustomFontWeight.medium,
-                      color: AppColors.primaryBlack,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    height: 50,
+                    child: FutureBuilder(
+                      future: GoogleTranslator().translate(title, to: 'en'),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const RectangleShimmer();
+                        } else {
+                          if (snapshot.hasData) {
+                            return AppText(
+                              context: context,
+                              text: snapshot.data?.text ?? '-',
+                              style: AppTextStyle.title3,
+                              fontWeight: CustomFontWeight.medium,
+                              color: AppColors.primaryBlack,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            );
+                          }
+                          return AppText(
+                            context: context,
+                            text: 'Data empty',
+                            style: AppTextStyle.title3,
+                            fontWeight: CustomFontWeight.medium,
+                            color: AppColors.primaryBlack,
+                          );
+                        }
+                      },
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 4),
-              AppText(
-                context: context,
-                text: content,
-                style: AppTextStyle.body1,
-                fontWeight: CustomFontWeight.normal,
-                color: AppColors.primaryBlack,
-                textAlign: TextAlign.left,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+              FutureBuilder(
+                future: GoogleTranslator().translate(content, to: 'en'),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const RectangleShimmer(
+                      w: double.maxFinite,
+                      h: 50,
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      return AppText(
+                        context: context,
+                        text: snapshot.data?.text ?? '-',
+                        style: AppTextStyle.title3,
+                        fontWeight: CustomFontWeight.normal,
+                        color: AppColors.primaryBlack,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    }
+                    return AppText(
+                      context: context,
+                      text: 'Data empty',
+                      style: AppTextStyle.title3,
+                      fontWeight: CustomFontWeight.medium,
+                      color: AppColors.primaryBlack,
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: AppText(
-                  context: context,
-                  text: dateFormat,
-                  style: AppTextStyle.body1,
-                  fontWeight: CustomFontWeight.normal,
-                  color: AppColors.primaryBlack,
-                  textAlign: TextAlign.left,
-                  maxLines: 3,
-                ),
+              FutureBuilder(
+                future: Future.delayed(const Duration(milliseconds: 1500)),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Align(
+                      alignment: Alignment.bottomRight,
+                      child: RectangleShimmer(),
+                    );
+                  } else {
+                    return Align(
+                      alignment: Alignment.bottomRight,
+                      child: AppText(
+                        context: context,
+                        text: dateFormat,
+                        style: AppTextStyle.body1,
+                        fontWeight: CustomFontWeight.normal,
+                        color: AppColors.primaryBlack,
+                        textAlign: TextAlign.left,
+                        maxLines: 3,
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),

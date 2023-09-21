@@ -11,8 +11,15 @@ import '../../logic/cubit/password_visibility_cubit.dart';
 import '../../utils/utils.dart';
 import 'widget/input_login_widget.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
 
   static const String userNameData = 'rachman.latif@gmail.com';
   static const String passwordData = 'testing';
@@ -23,7 +30,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widthSize = MediaQuery.sizeOf(context).width;
-    final formKey = GlobalKey<FormState>();
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -148,7 +154,9 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
+                          if (formKey.currentState!.validate() &&
+                              userName.contains(userNameData) &&
+                              password.contains(passwordData)) {
                             UserCredential userCredential = UserCredential(
                               email: userName,
                               password: password,
