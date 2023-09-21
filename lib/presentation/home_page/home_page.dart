@@ -77,7 +77,20 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: double.infinity,
                 height: 180,
-                child: BlocBuilder<ArticleBloc, ArticleState>(
+                child: BlocConsumer<ArticleBloc, ArticleState>(
+                  listener: (context, state) {
+                    if (state is ArticleError) {
+                      Center(
+                        child: AppText(
+                          context: context,
+                          text: state.errorMessage,
+                          style: AppTextStyle.title2,
+                          fontWeight: CustomFontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      );
+                    }
+                  },
                   builder: (context, state) {
                     if (state is ArticleLoading) {
                       return ListView.separated(
@@ -111,7 +124,20 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: widthSize,
                 height: heightSize * 0.65,
-                child: BlocBuilder<ArticleBloc, ArticleState>(
+                child: BlocConsumer<ArticleBloc, ArticleState>(
+                  listener: (context, state) {
+                    if (state is ArticleError) {
+                      Center(
+                        child: AppText(
+                          context: context,
+                          text: state.errorMessage,
+                          style: AppTextStyle.title2,
+                          fontWeight: CustomFontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      );
+                    }
+                  },
                   builder: (context, state) {
                     if (state is ArticleLoading) {
                       return ListView.separated(
