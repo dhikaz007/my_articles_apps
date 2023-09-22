@@ -1,6 +1,6 @@
 part of 'widgets.dart';
 
-class ArticleVerticalWidget extends StatelessWidget {
+class ArticleVerticalWidget extends StatefulWidget {
   final String image;
   final String title;
   final String content;
@@ -14,8 +14,28 @@ class ArticleVerticalWidget extends StatelessWidget {
   });
 
   @override
+  State<ArticleVerticalWidget> createState() => _ArticleVerticalWidgetState();
+}
+
+class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
+  late GoogleTranslator translator;
+  String code = 'en';
+
+  @override
+  void initState() {
+    getCode();
+    translator = GoogleTranslator();
+    super.initState();
+  }
+
+  void getCode() async {
+    code = await LanguageStorage.getCode() ?? 'en';
+    setState(() {});
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    final date = DateTime.parse(createdAt);
+    final date = DateTime.parse(widget.createdAt);
     final dateFormat = DateFormat('d MMMM y,').add_Hms().format(date);
 
     return Padding(
@@ -40,7 +60,7 @@ class ArticleVerticalWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: CachedNetworkImage(
-                      imageUrl: image,
+                      imageUrl: widget.image,
                       width: 100,
                       height: 100,
                       placeholder: (context, url) {
@@ -61,7 +81,7 @@ class ArticleVerticalWidget extends StatelessWidget {
                     width: 220,
                     height: 50,
                     child: FutureBuilder(
-                      future: GoogleTranslator().translate(title, to: 'en'),
+                      future: GoogleTranslator().translate(widget.title, to: code),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -93,7 +113,7 @@ class ArticleVerticalWidget extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               FutureBuilder(
-                future: GoogleTranslator().translate(content, to: 'en'),
+                future: GoogleTranslator().translate(widget.content, to: code),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const RectangleShimmer(

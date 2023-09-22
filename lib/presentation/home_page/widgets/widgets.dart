@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:translator/translator.dart';
 
 import '../../../core/constants/constants.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 
 part 'article_horizontal_widget.dart';

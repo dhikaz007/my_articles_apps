@@ -2,8 +2,8 @@ part of 'helpers.dart';
 
 class GetLanguage {
   static Future<String> currentLanguage() async {
-    String code = await LanguageStorage.getCode() ?? 'la';
-    String countryCode = await LanguageStorage.getCountryCode() ?? '';
+    String code = await LanguageStorage.getCode() ?? 'en';
+    String countryCode = await LanguageStorage.getCountryCode() ?? 'US';
 
     debugPrint('INI CODENYA');
     debugPrint(code);

@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   void getLanguage() async {
     code = await GetLanguage.currentLanguage();
+    setState(() {});
   }
 
   @override
@@ -100,6 +101,7 @@ class _HomePageState extends State<HomePage> {
                             ArticleHorizontalWidget(
                           title: state.article[index].title,
                           content: state.article[index].content,
+                          //code: code,
                         ),
                       );
                     } else {

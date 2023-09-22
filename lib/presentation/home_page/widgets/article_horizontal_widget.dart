@@ -1,6 +1,6 @@
 part of 'widgets.dart';
 
-class ArticleHorizontalWidget extends StatelessWidget {
+class ArticleHorizontalWidget extends StatefulWidget {
   final String title;
   final String content;
   const ArticleHorizontalWidget({
@@ -8,6 +8,27 @@ class ArticleHorizontalWidget extends StatelessWidget {
     required this.title,
     required this.content,
   });
+
+  @override
+  State<ArticleHorizontalWidget> createState() =>
+      _ArticleHorizontalWidgetState();
+}
+
+class _ArticleHorizontalWidgetState extends State<ArticleHorizontalWidget> {
+  late GoogleTranslator translator;
+  String code = 'en';
+
+  @override
+  void initState() {
+    getCode();
+    translator = GoogleTranslator();
+    super.initState();
+  }
+
+  void getCode() async {
+    code = await LanguageStorage.getCode() ?? 'en';
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +47,7 @@ class ArticleHorizontalWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FutureBuilder(
-              future: GoogleTranslator().translate(title, to: 'en'),
+              future: translator.translate(widget.title, to: code),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const RectangleShimmer();
@@ -53,7 +74,7 @@ class ArticleHorizontalWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             FutureBuilder(
-              future: GoogleTranslator().translate(content, to: 'en'),
+              future: translator.translate(widget.content, to: code),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const RectangleShimmer(
