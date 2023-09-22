@@ -29,14 +29,16 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<ResponseAPI> loginEmailandPassword(
       {required UserCredential userCredential}) async {
     try {
-      final response = await DioNetworkAuth().loginWithEmailPassword(
+      final json = await DioNetworkAuth().loginWithEmailPassword(
         endpoint: ApiEndpoint.login,
         userCredential: userCredential,
       );
-      if (response.data['code'] != 200 && response.data['status'] != true) {
-        return ResponseAPI(message: response.data['message']);
+      if (json.data['code'] != 200 && json.data['status'] != true) {
+        debugPrint('AUTH CODENYA: ${json.data['code']}');
+      debugPrint('AUTH STATUSNYA: ${json.data['status']}');
+        return ResponseAPI(message: json.data['message']);
       }
-      return ResponseAPI<Map<String, dynamic>>.fromJson(response.data);
+      return ResponseAPI<Map<String, dynamic>>.fromJson(json.data);
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
         return ResponseAPI(

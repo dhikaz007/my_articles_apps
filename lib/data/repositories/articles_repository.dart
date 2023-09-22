@@ -24,7 +24,9 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
   Future<List<Articles>> getArticles() async {
     final json =
         await DioNetworkArticles().getArticles(endpoint: ApiEndpoint.articles);
-    if (json.statusCode == 200) {
+    if (json.data['code'] == 200 && json.data['status'] == true) {
+      debugPrint('ARTICLE CODENYA: ${json.data['code']}');
+      debugPrint('ARTICLE STATUSNYA: ${json.data['status']}');
       final data = (json.data['articles'] as List)
           .map((e) => Articles.fromJson(e))
           .toList();
