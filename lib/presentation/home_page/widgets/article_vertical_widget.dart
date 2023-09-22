@@ -1,19 +1,8 @@
 part of 'widgets.dart';
 
 class ArticleVerticalWidget extends StatefulWidget {
-  // final String image;
-  // final String title;
-  // final String content;
-  // final String createdAt;
   final Articles articles;
-  const ArticleVerticalWidget({
-    super.key,
-    // required this.image,
-    // required this.title,
-    // required this.content,
-    // required this.createdAt,
-    required this.articles,
-  });
+  const ArticleVerticalWidget({super.key, required this.articles});
 
   @override
   State<ArticleVerticalWidget> createState() => _ArticleVerticalWidgetState();
@@ -91,7 +80,7 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                     height: 50,
                     child: FutureBuilder(
                       future:
-                          GoogleTranslator().translate(widget.articles.title, to: code),
+                          translator.translate(widget.articles.title, to: code),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -123,7 +112,7 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
               ),
               const SizedBox(height: 4),
               FutureBuilder(
-                future: GoogleTranslator().translate(widget.articles.content, to: code),
+                future: translator.translate(widget.articles.content, to: code),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const RectangleShimmer(

@@ -2,10 +2,7 @@ part of 'widgets.dart';
 
 class ArticleHorizontalWidget extends StatefulWidget {
   final Articles articles;
-  const ArticleHorizontalWidget({
-    super.key,
-    required this.articles,
-  });
+  const ArticleHorizontalWidget({super.key, required this.articles});
 
   @override
   State<ArticleHorizontalWidget> createState() =>
@@ -44,10 +41,9 @@ class _ArticleHorizontalWidgetState extends State<ArticleHorizontalWidget> {
             offset: const Offset(0, 5),
             blurRadius: 5,
           ),
-          BoxShadow(
+          const BoxShadow(
             color: AppColors.primaryWhite,
-            offset: const Offset(-10, 0),
-            //blurRadius: 5,
+            offset: Offset(-10, 0),
           ),
         ],
       ),

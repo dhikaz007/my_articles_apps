@@ -12,8 +12,8 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.authRepositoryImpl}) : super(AuthInitial());
 
   void loginState({required String userName, required String password}) async {
-    emit(AuthLoading());
     try {
+    emit(AuthLoading());
       final isLogin = await authRepositoryImpl.login(
           username: userName, password: password);
       if (isLogin == true) {

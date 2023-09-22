@@ -7,7 +7,7 @@ class Articles {
   final String content;
   final String image;
   final String created;
-  final double views;
+  final int views;
   final String name;
   final String email;
   final String phoneNumber;

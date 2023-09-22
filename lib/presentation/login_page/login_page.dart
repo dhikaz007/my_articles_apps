@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 part of 'screens.dart';
 
 class LoginPage extends StatefulWidget {
@@ -78,56 +80,46 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   const SizedBox(height: 32),
-                  BlocListener<AuthCubit, AuthState>(
-                    listener: (context, auth) async {
-                      if (auth is AuthLoading) {
-                        const Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.jadeJewel,
-                          ),
-                        );
-                      } else if (auth is AuthAuthenticated) {
-                        String? accessToken =
-                            await TokenStoreges.getAccessToken();
-                        if (accessToken != null) {
-                          Future.delayed(
-                            const Duration(seconds: 1),
-                            () => Modular.to
-                                .navigate('/home', arguments: userName),
-                          ).then(
-                            (_) => ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.green,
-                                content: AppText(
-                                  context: context,
-                                  text: auth.message,
-                                  style: AppTextStyle.title3,
-                                  fontWeight: CustomFontWeight.medium,
-                                  color: AppColors.primaryBlack,
-                                  maxLines: 2,
-                                ),
-                              ),
-                            ),
+                  SizedBox(
+                    width: widthSize,
+                    child: BlocListener<AuthCubit, AuthState>(
+                      listener: (context, auth) async {
+                        debugPrint('AUTH STATE $auth');
+                        if (auth is AuthLoading) {
+                          CustomLoadingOverlay.showLoadingOverlay(context);
+                        }
+                        if (auth is AuthError) {
+                          CustomLoadingOverlay.hideLoadingOverlay(context);
+                          CustomSnackbar.showSnackbar(
+                            context,
+                            auth.errorMessage,
+                            SnackBarStatus.failure,
                           );
                         }
-                      } else if (auth is AuthError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: Colors.red,
-                            content: AppText(
-                              context: context,
-                              text: auth.errorMessage,
-                              style: AppTextStyle.title3,
-                              fontWeight: CustomFontWeight.medium,
-                              color: AppColors.primaryBlack,
-                              maxLines: 2,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                    child: SizedBox(
-                      width: widthSize,
+                        if (auth is AuthAuthenticated) {
+                          String? accessToken =
+                              await TokenStoreges.getAccessToken();
+                          if (accessToken == null || accessToken.isEmpty) {
+                            debugPrint('TOKEN GAK ADA $accessToken');
+                            Future.delayed(
+                              const Duration(seconds: 1),
+                              () {
+                                Modular.to.navigate('/login');
+                              },
+                            );
+                          } else {
+                            debugPrint('TOKEN ADA $accessToken');
+
+                            Modular.to.navigate('/home', arguments: userName);
+                          }
+                          CustomLoadingOverlay.hideLoadingOverlay(context);
+                          CustomSnackbar.showSnackbar(
+                            context,
+                            auth.message,
+                            SnackBarStatus.success,
+                          );
+                        }
+                      },
                       child: ElevatedButton(
                         style: ButtonStyle(
                           shape: MaterialStatePropertyAll(

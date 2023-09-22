@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'core/constants/constants.dart';
 import 'core/localizations/app_localizations.dart';
 import 'data/repositories/repositories.dart';
 import 'logic/bloc/article_bloc.dart';
@@ -72,59 +74,78 @@ class _MainAppState extends State<MainApp> {
                   ..add(GetArticle())),
         BlocProvider(create: (context) => LanguageCubit()),
       ],
-      child: ResponsiveSizer(
-        builder: (context, orientation, screenType) =>
-            BlocBuilder<LanguageCubit, LanguageState>(
-          builder: (context, state) {
-            if (state is LanguageInitial) {
-              if (code != null) {
-                ReadContext(context)
-                    .read<LanguageCubit>()
-                    .setLanguage(Locale(code ?? '', countryCode ?? ''));
+      child: GlobalLoaderOverlay(
+        useDefaultLoading: false,
+        overlayOpacity: 0.8,
+        overlayColor: Colors.grey.withOpacity(0.3),
+        overlayWidget: Center(
+          child: Container(
+            width: 100,
+            height: 100,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.primaryWhite,
+            ),
+            child: const CircularProgressIndicator(
+              color: AppColors.jadeJewel,
+            ),
+          ),
+        ),
+        child: ResponsiveSizer(
+          builder: (context, orientation, screenType) =>
+              BlocBuilder<LanguageCubit, LanguageState>(
+            builder: (context, state) {
+              if (state is LanguageInitial) {
+                if (code != null) {
+                  ReadContext(context)
+                      .read<LanguageCubit>()
+                      .setLanguage(Locale(code ?? '', countryCode ?? ''));
+                }
+                return MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  themeAnimationCurve: Curves.easeInOut,
+                  theme: ThemeData(fontFamily: 'Inter'),
+                  routerConfig: Modular.routerConfig,
+                  localizationsDelegates: const [
+                    //* Add localization to app
+                    AppLocalizations
+                        .delegate, //* build in terminal flutter gen-l10n
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en', 'US'),
+                    Locale('id', 'ID'),
+                  ],
+                  locale: ReadContext(context).read<LanguageCubit>().locale,
+                );
               }
-              return MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                themeAnimationCurve: Curves.easeInOut,
-                theme: ThemeData(fontFamily: 'Inter'),
-                routerConfig: Modular.routerConfig,
-                localizationsDelegates: const [
-                  //* Add localization to app
-                  AppLocalizations
-                      .delegate, //* build in terminal flutter gen-l10n
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('en', 'US'),
-                  Locale('id', 'ID'),
-                ],
-                locale: ReadContext(context).read<LanguageCubit>().locale,
+              if (state is ChangeLanguageSuccess) {
+                return MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  themeAnimationCurve: Curves.easeInOut,
+                  theme: ThemeData(fontFamily: 'Inter'),
+                  routerConfig: Modular.routerConfig,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en', 'US'),
+                    Locale('id', 'ID'),
+                  ],
+                  locale: ReadContext(context).read<LanguageCubit>().locale,
+                );
+              }
+              return const MaterialApp(
+                home: LoginPage(),
               );
-            }
-            if (state is ChangeLanguageSuccess) {
-              return MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                themeAnimationCurve: Curves.easeInOut,
-                theme: ThemeData(fontFamily: 'Inter'),
-                routerConfig: Modular.routerConfig,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('en', 'US'),
-                  Locale('id', 'ID'),
-                ],
-                locale: ReadContext(context).read<LanguageCubit>().locale,
-              );
-            }
-            return const MaterialApp(
-              home: LoginPage(),
-            );
-          },
+            },
+          ),
         ),
       ),
     );

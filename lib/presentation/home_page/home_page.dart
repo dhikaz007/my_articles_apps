@@ -57,6 +57,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const Spacer(),
                   InkWell(
+                    onTap: () =>
+                        BlocProvider.of<ArticleBloc>(context).add(GetArticle()),
+                    child: const Icon(Icons.refresh),
+                  ),
+                  const SizedBox(width: 8),
+                  InkWell(
                     onTap: () => Modular.to.pushNamed('/select-language'),
                     child: SvgPicture.asset('assets/svg/globe.svg'),
                   ),
@@ -66,10 +72,11 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: double.infinity,
                 height: 180,
-                child: BlocConsumer<ArticleBloc, ArticleState>(
-                  listener: (context, state) {
+                child: BlocBuilder<ArticleBloc, ArticleState>(
+                  builder: (context, state) {
+                    debugPrint('TOP ARTICLE STATE $state');
                     if (state is ArticleError) {
-                      Center(
+                      return Center(
                         child: AppText(
                           context: context,
                           text: state.errorMessage,
@@ -79,20 +86,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     }
-                  },
-                  builder: (context, state) {
-                    if (state is ArticleLoading) {
-                      return ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 3,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 20),
-                        itemBuilder: (context, index) => const RectangleShimmer(
-                          w: 220,
-                          h: 180,
-                        ),
-                      );
-                    } else if (state is ArticleLoaded) {
+                    if (state is ArticleLoaded) {
                       return ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -104,9 +98,17 @@ class _HomePageState extends State<HomePage> {
                           articles: state.article[index],
                         ),
                       );
-                    } else {
-                      return const SizedBox.shrink();
                     }
+                    return ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 3,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 20),
+                      itemBuilder: (context, index) => const RectangleShimmer(
+                        w: 220,
+                        h: 180,
+                      ),
+                    );
                   },
                 ),
               ),
@@ -114,8 +116,9 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: widthSize,
                 height: heightSize * 0.65,
-                child: BlocConsumer<ArticleBloc, ArticleState>(
-                  listener: (context, state) {
+                child: BlocBuilder<ArticleBloc, ArticleState>(
+                  builder: (context, state) {
+                    debugPrint('BOTTOM ARTICLE STATE $state');
                     if (state is ArticleError) {
                       Center(
                         child: AppText(
@@ -126,10 +129,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.red,
                         ),
                       );
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is ArticleLoading) {
+                    } else if (state is ArticleLoading) {
                       return ListView.separated(
                         itemCount: 3,
                         separatorBuilder: (context, index) =>
@@ -149,9 +149,8 @@ class _HomePageState extends State<HomePage> {
                           articles: state.article[index],
                         ),
                       );
-                    } else {
-                      return const SizedBox.shrink();
                     }
+                    return const SizedBox.shrink();
                   },
                 ),
               ),
