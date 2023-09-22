@@ -101,8 +101,7 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(width: 20),
                         itemBuilder: (context, index) =>
                             ArticleHorizontalWidget(
-                          title: state.article[index].title,
-                          content: state.article[index].content,
+                          articles: state.article[index],
                         ),
                       );
                     } else {
@@ -147,10 +146,7 @@ class _HomePageState extends State<HomePage> {
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 20),
                         itemBuilder: (context, index) => ArticleVerticalWidget(
-                          image: state.article[index].image,
-                          title: state.article[index].title,
-                          content: state.article[index].content,
-                          createdAt: state.article[index].created,
+                          articles: state.article[index],
                         ),
                       );
                     } else {
