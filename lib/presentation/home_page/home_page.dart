@@ -93,15 +93,16 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     } else if (state is ArticleLoaded) {
-                      return ListView.builder(
+                      return ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount: state.article.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 20),
                         itemBuilder: (context, index) =>
                             ArticleHorizontalWidget(
                           title: state.article[index].title,
                           content: state.article[index].content,
-                          //code: code,
                         ),
                       );
                     } else {
@@ -140,9 +141,11 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     } else if (state is ArticleLoaded) {
-                      return ListView.builder(
+                      return ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         itemCount: state.article.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 20),
                         itemBuilder: (context, index) => ArticleVerticalWidget(
                           image: state.article[index].image,
                           title: state.article[index].title,
