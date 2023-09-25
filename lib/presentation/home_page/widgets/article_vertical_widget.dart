@@ -36,7 +36,7 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
         width: double.infinity,
         height: 200,
         decoration: BoxDecoration(
-          color: AppColors.primaryGreenAccent15,
+          color: AppColors.primaryGreen.withAlpha(15),
           borderRadius: BorderRadius.circular(5),
         ),
         child: SingleChildScrollView(

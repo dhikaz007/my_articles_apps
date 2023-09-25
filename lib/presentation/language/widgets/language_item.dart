@@ -22,7 +22,7 @@ class LanguageItem extends StatelessWidget {
       width: double.maxFinite,
       height: 50,
       decoration: BoxDecoration(
-        color: AppColors.primaryGreenAccent15,
+        color: AppColors.primaryGreen.withAlpha(15),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

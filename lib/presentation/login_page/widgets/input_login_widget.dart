@@ -22,7 +22,7 @@ class InputLoginWidget extends StatelessWidget {
       width: double.maxFinite,
       height: 64,
       decoration: BoxDecoration(
-        color: AppColors.primaryGreenAccent30,
+        color: AppColors.primaryGreen.withAlpha(30),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Row(

@@ -1,9 +1,7 @@
 part of 'constants.dart';
 
 class AppColors {
-  static Color primaryGreenAccent30 = const Color(0XFF247881).withAlpha(30);
   static Color primaryGreen = const Color(0XFF247881);
-  static Color primaryGreenAccent15 = const Color(0XFF247881).withAlpha(15);
   static Color primaryWhite = const Color(0XFFFFFFFF);
   static Color primaryBlack = const Color(0XFF000000);
   static Color primaryRed = const Color(0XFFB22727);
