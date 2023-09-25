@@ -38,8 +38,8 @@ class CustomSnackbar {
         content: AppText(
           context: context,
           text: message,
-          style: AppTextStyle.title2,
-          fontWeight: CustomFontWeight.normal,
+          style: AppTextStyle.font_16,
+          fontWeight: AppFontWeight.normal,
           color: AppColors.primaryWhite,
           maxLines: 2,
         ),

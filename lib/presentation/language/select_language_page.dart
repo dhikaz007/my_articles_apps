@@ -10,7 +10,7 @@ class SelectLanguagePage extends StatelessWidget {
       appBar: AppBar(
         leading: InkWell(
           onTap: () => Modular.to.pop(),
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back,
             color: AppColors.primaryBlack,
           ),
@@ -20,8 +20,8 @@ class SelectLanguagePage extends StatelessWidget {
         title: AppText(
           context: context,
           text: '${AppLocalizations.of(context)?.selectLanguage}',
-          style: AppTextStyle.title2,
-          fontWeight: CustomFontWeight.bold,
+          style: AppTextStyle.font_20,
+          fontWeight: AppFontWeight.bold,
           color: AppColors.primaryBlack,
         ),
       ),

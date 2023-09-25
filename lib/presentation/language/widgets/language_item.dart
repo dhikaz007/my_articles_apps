@@ -22,7 +22,7 @@ class LanguageItem extends StatelessWidget {
       width: double.maxFinite,
       height: 50,
       decoration: BoxDecoration(
-        color: AppColors.blueFlax,
+        color: AppColors.primaryGreenAccent15,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -36,8 +36,8 @@ class LanguageItem extends StatelessWidget {
           AppText(
             context: context,
             text: title,
-            style: AppTextStyle.title2,
-            fontWeight: CustomFontWeight.medium,
+            style: AppTextStyle.font_16,
+            fontWeight: AppFontWeight.medium,
             color: AppColors.primaryBlack,
           ),
           const Spacer(),

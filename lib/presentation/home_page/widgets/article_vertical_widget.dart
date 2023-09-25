@@ -34,49 +34,43 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
       child: Container(
         padding: const EdgeInsets.all(12),
         width: double.infinity,
-        height: 220,
+        height: 200,
         decoration: BoxDecoration(
-          color: AppColors.blueFlax,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.jadeJewel.withOpacity(0.6),
-              offset: const Offset(0, 5),
-              blurRadius: 5,
-            ),
-          ],
+          color: AppColors.primaryGreenAccent15,
+          borderRadius: BorderRadius.circular(5),
         ),
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Wrap(
-                spacing: 8,
-                crossAxisAlignment: WrapCrossAlignment.center,
+              Row(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(5),
                     child: CachedNetworkImage(
                       imageUrl: widget.articles.image,
-                      width: 100,
-                      height: 100,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
                       placeholder: (context, url) {
                         if (url.isNotEmpty) {
-                          return const RectangleShimmer();
+                          return const ColorShimmer(
+                            w: 80,
+                            h: 80,
+                          );
                         }
-                        return AppText(
-                          context: context,
-                          text: 'NO IMAGE',
-                          style: AppTextStyle.title3,
-                          fontWeight: CustomFontWeight.bold,
-                          color: AppColors.blueFlax,
+                        return Image.asset(
+                          'assets/png/no_image.png',
+                          width: 80,
+                          height: 80,
                         );
                       },
                     ),
                   ),
+                  const SizedBox(width: 12),
                   SizedBox(
-                    width: 220,
+                    width: 255,
                     height: 50,
                     child: FutureBuilder(
                       future:
@@ -84,14 +78,17 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const RectangleShimmer();
+                          return const ColorShimmer(
+                            w: 210,
+                            h: 38,
+                          );
                         } else {
                           if (snapshot.hasData) {
                             return AppText(
                               context: context,
                               text: snapshot.data?.text ?? '-',
-                              style: AppTextStyle.title3,
-                              fontWeight: CustomFontWeight.medium,
+                              style: AppTextStyle.font_16,
+                              fontWeight: AppFontWeight.normal,
                               color: AppColors.primaryBlack,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -100,8 +97,8 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                           return AppText(
                             context: context,
                             text: 'Data empty',
-                            style: AppTextStyle.title3,
-                            fontWeight: CustomFontWeight.medium,
+                            style: AppTextStyle.font_16,
+                            fontWeight: AppFontWeight.bold,
                             color: AppColors.primaryBlack,
                           );
                         }
@@ -110,22 +107,22 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 12),
               FutureBuilder(
                 future: translator.translate(widget.articles.content, to: code),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const RectangleShimmer(
+                    return const ColorShimmer(
                       w: double.maxFinite,
-                      h: 50,
+                      h: 57,
                     );
                   } else {
                     if (snapshot.hasData) {
                       return AppText(
                         context: context,
                         text: snapshot.data?.text ?? '-',
-                        style: AppTextStyle.title3,
-                        fontWeight: CustomFontWeight.normal,
+                        style: AppTextStyle.font_16,
+                        fontWeight: AppFontWeight.normal,
                         color: AppColors.primaryBlack,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -134,21 +131,24 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                     return AppText(
                       context: context,
                       text: 'Data empty',
-                      style: AppTextStyle.title3,
-                      fontWeight: CustomFontWeight.medium,
+                      style: AppTextStyle.font_16,
+                      fontWeight: AppFontWeight.medium,
                       color: AppColors.primaryBlack,
                     );
                   }
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               FutureBuilder(
                 future: Future.delayed(const Duration(milliseconds: 1500)),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Align(
                       alignment: Alignment.bottomRight,
-                      child: RectangleShimmer(),
+                      child: ColorShimmer(
+                        w: 180,
+                        h: 19,
+                      ),
                     );
                   } else {
                     return Align(
@@ -156,8 +156,8 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                       child: AppText(
                         context: context,
                         text: dateFormat,
-                        style: AppTextStyle.body1,
-                        fontWeight: CustomFontWeight.normal,
+                        style: AppTextStyle.font_16,
+                        fontWeight: AppFontWeight.normal,
                         color: AppColors.primaryBlack,
                         textAlign: TextAlign.left,
                         maxLines: 3,

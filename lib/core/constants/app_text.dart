@@ -2,18 +2,13 @@ part of 'constants.dart';
 
 enum AppTextStyle {
   none,
-  display1,
-  headline1,
-  headline2,
-  title1,
-  title2,
-  title3,
-  body1,
-  body2,
-  body3;
+  font_40,
+  font_20,
+  font_16,
+  font_12;
 }
 
-enum CustomFontWeight {
+enum AppFontWeight {
   normal,
   medium,
   bold;
@@ -29,7 +24,7 @@ class AppText extends StatelessWidget {
   final String text;
   final BuildContext context;
   final AppTextStyle style;
-  final CustomFontWeight fontWeight;
+  final AppFontWeight fontWeight;
   final TextAlign? textAlign;
   final Color color;
   final int? maxLines;
@@ -54,59 +49,29 @@ class AppText extends StatelessWidget {
           return Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white,
               );
-        case AppTextStyle.display1:
+        case AppTextStyle.font_40:
           return TextStyle(
             color: color,
             fontWeight: fontWeight.value,
-            fontSize: 36,
+            fontSize: 40,
           );
-        case AppTextStyle.headline1:
-          return TextStyle(
-            color: color,
-            fontWeight: fontWeight.value,
-            fontSize: 28,
-          );
-        case AppTextStyle.headline2:
-          return TextStyle(
-            color: color,
-            fontWeight: fontWeight.value,
-            fontSize: 24,
-          );
-        case AppTextStyle.title1:
+        case AppTextStyle.font_20:
           return TextStyle(
             color: color,
             fontWeight: fontWeight.value,
             fontSize: 20,
           );
-        case AppTextStyle.title2:
-          return TextStyle(
-            color: color,
-            fontWeight: fontWeight.value,
-            fontSize: 18,
-          );
-        case AppTextStyle.title3:
+        case AppTextStyle.font_16:
           return TextStyle(
             color: color,
             fontWeight: fontWeight.value,
             fontSize: 16,
           );
-        case AppTextStyle.body1:
-          return TextStyle(
-            color: color,
-            fontWeight: fontWeight.value,
-            fontSize: 14,
-          );
-        case AppTextStyle.body2:
+        case AppTextStyle.font_12:
           return TextStyle(
             color: color,
             fontWeight: fontWeight.value,
             fontSize: 12,
-          );
-        case AppTextStyle.body3:
-          return TextStyle(
-            color: color,
-            fontWeight: fontWeight.value,
-            fontSize: 10,
           );
       }
     }

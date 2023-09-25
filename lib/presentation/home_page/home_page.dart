@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(
+            top: 20,
             left: 20,
             right: 20,
           ),
@@ -39,34 +40,55 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  AppText(
-                    context: context,
-                    text: '${AppLocalizations.of(context)?.welcome}, ',
-                    style: AppTextStyle.title1,
-                    fontWeight: CustomFontWeight.normal,
-                    color: AppColors.primaryBlack,
-                  ),
-                  AppText(
-                    context: context,
-                    text: ' ${widget.user.split('.').first}',
-                    style: AppTextStyle.title1,
-                    fontWeight: CustomFontWeight.bold,
-                    color: AppColors.primaryBlack,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () =>
-                        BlocProvider.of<ArticleBloc>(context).add(GetArticle()),
-                    child: const Icon(Icons.refresh),
-                  ),
-                  const SizedBox(width: 8),
-                  InkWell(
-                    onTap: () => Modular.to.pushNamed('/select-language'),
-                    child: SvgPicture.asset('assets/svg/globe.svg'),
-                  ),
-                ],
+              FutureBuilder(
+                future: Future.delayed(const Duration(milliseconds: 1500)),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GradientShimmer(
+                          w: 144,
+                          h: 24,
+                        ),
+                        GradientShimmer(
+                          w: 80,
+                          h: 24,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      children: [
+                        AppText(
+                          context: context,
+                          text: '${AppLocalizations.of(context)?.welcome}, ',
+                          style: AppTextStyle.font_20,
+                          fontWeight: AppFontWeight.normal,
+                          color: AppColors.primaryBlack,
+                        ),
+                        AppText(
+                          context: context,
+                          text: ' ${widget.user.split('.').first}',
+                          style: AppTextStyle.font_20,
+                          fontWeight: AppFontWeight.bold,
+                          color: AppColors.primaryBlack,
+                        ),
+                        const Spacer(),
+                        InkWell(
+                          onTap: () => BlocProvider.of<ArticleBloc>(context)
+                              .add(GetArticle()),
+                          child: const Icon(Icons.refresh),
+                        ),
+                        const SizedBox(width: 8),
+                        InkWell(
+                          onTap: () => Modular.to.pushNamed('/select-language'),
+                          child: SvgPicture.asset('assets/svg/globe.svg'),
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -80,15 +102,15 @@ class _HomePageState extends State<HomePage> {
                         child: AppText(
                           context: context,
                           text: state.errorMessage,
-                          style: AppTextStyle.title2,
-                          fontWeight: CustomFontWeight.bold,
+                          style: AppTextStyle.font_20,
+                          fontWeight: AppFontWeight.bold,
                           color: Colors.red,
                         ),
                       );
                     }
                     if (state is ArticleLoaded) {
                       return ListView.separated(
-                        physics: const BouncingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount: state.article.length,
                         separatorBuilder: (context, index) =>
@@ -104,9 +126,9 @@ class _HomePageState extends State<HomePage> {
                       itemCount: 3,
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 20),
-                      itemBuilder: (context, index) => const RectangleShimmer(
-                        w: 220,
-                        h: 180,
+                      itemBuilder: (context, index) => const GradientShimmer(
+                        w: 189,
+                        h: 152,
                       ),
                     );
                   },
@@ -124,8 +146,8 @@ class _HomePageState extends State<HomePage> {
                         child: AppText(
                           context: context,
                           text: state.errorMessage,
-                          style: AppTextStyle.title2,
-                          fontWeight: CustomFontWeight.bold,
+                          style: AppTextStyle.font_20,
+                          fontWeight: AppFontWeight.bold,
                           color: Colors.red,
                         ),
                       );
@@ -134,14 +156,14 @@ class _HomePageState extends State<HomePage> {
                         itemCount: 3,
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 20),
-                        itemBuilder: (context, index) => const RectangleShimmer(
+                        itemBuilder: (context, index) => const GradientShimmer(
                           w: double.maxFinite,
-                          h: 220,
+                          h: 200,
                         ),
                       );
                     } else if (state is ArticleLoaded) {
                       return ListView.separated(
-                        physics: const BouncingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         itemCount: state.article.length,
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 20),

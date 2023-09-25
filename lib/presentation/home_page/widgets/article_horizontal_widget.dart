@@ -29,23 +29,23 @@ class _ArticleHorizontalWidgetState extends State<ArticleHorizontalWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      width: 220,
-      height: 180,
+      width: 210,
+      height: 200,
       decoration: BoxDecoration(
         color: AppColors.primaryWhite,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primaryBlack),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(1),
-            offset: const Offset(0, 5),
-            blurRadius: 5,
-          ),
-          const BoxShadow(
-            color: AppColors.primaryWhite,
-            offset: Offset(-10, 0),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.primaryGreen),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: AppColors.primaryGrey,
+        //     offset: const Offset(0, 5),
+        //     blurRadius: 5,
+        //   ),
+        //   BoxShadow(
+        //     color: AppColors.primaryWhite,
+        //     offset: Offset(-10, 0),
+        //   ),
+        // ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,53 +54,51 @@ class _ArticleHorizontalWidgetState extends State<ArticleHorizontalWidget> {
             future: translator.translate(widget.articles.title, to: code),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const RectangleShimmer();
+                return const SizedBox.shrink();
               } else {
                 if (snapshot.hasData) {
                   return AppText(
                     context: context,
                     text: snapshot.data?.text ?? '-',
-                    style: AppTextStyle.title2,
-                    fontWeight: CustomFontWeight.bold,
-                    color: AppColors.jadeJewel,
+                    style: AppTextStyle.font_16,
+                    fontWeight: AppFontWeight.bold,
+                    color: AppColors.primaryGreen,
                     overflow: TextOverflow.ellipsis,
                   );
                 }
                 return AppText(
                   context: context,
                   text: 'Data empty',
-                  style: AppTextStyle.title3,
-                  fontWeight: CustomFontWeight.medium,
+                  style: AppTextStyle.font_16,
+                  fontWeight: AppFontWeight.bold,
                   color: AppColors.primaryBlack,
                 );
               }
             },
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           FutureBuilder(
             future: translator.translate(widget.articles.content, to: code),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const RectangleShimmer(
-                  h: 120,
-                );
+                return const SizedBox.shrink();
               } else {
                 if (snapshot.hasData) {
                   return AppText(
                     context: context,
                     text: snapshot.data?.text ?? '-',
-                    style: AppTextStyle.body1,
-                    fontWeight: CustomFontWeight.normal,
+                    style: AppTextStyle.font_16,
+                    fontWeight: AppFontWeight.normal,
                     color: AppColors.primaryBlack,
-                    maxLines: 8,
+                    maxLines: 7,
                     textAlign: TextAlign.left,
                   );
                 }
                 return AppText(
                   context: context,
                   text: 'Data empty',
-                  style: AppTextStyle.title3,
-                  fontWeight: CustomFontWeight.normal,
+                  style: AppTextStyle.font_16,
+                  fontWeight: AppFontWeight.normal,
                   color: AppColors.primaryBlack,
                 );
               }

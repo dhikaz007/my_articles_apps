@@ -87,8 +87,8 @@ class _MainAppState extends State<MainApp> {
               borderRadius: BorderRadius.circular(10),
               color: AppColors.primaryWhite,
             ),
-            child: const CircularProgressIndicator(
-              color: AppColors.jadeJewel,
+            child: CircularProgressIndicator(
+              color: AppColors.primaryGreen,
             ),
           ),
         ),
@@ -100,7 +100,7 @@ class _MainAppState extends State<MainApp> {
                 if (code != null) {
                   ReadContext(context)
                       .read<LanguageCubit>()
-                      .setLanguage(Locale(code ?? '', countryCode ?? ''));
+                      .setLanguage(Locale(code ?? 'en', countryCode ?? 'US'));
                 }
                 return MaterialApp.router(
                   debugShowCheckedModeBanner: false,
