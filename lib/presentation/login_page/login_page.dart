@@ -19,33 +19,39 @@ class _LoginPageState extends State<LoginPage> {
   void errorDialog({required BuildContext context, required String message}) {
     showDialog(
       context: context,
-      builder: (context) => Center(
-        child: Container(
-          width: 300,
-          height: 40,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
+      builder: (context) {
+        Future.delayed(
+          const Duration(seconds: 2),
+          () => Modular.to.pop(),
+        );
+        return Center(
+          child: Container(
+            width: 300,
+            height: 40,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.primaryRed,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Row(
+              children: [
+                SvgPicture.asset('assets/svg/error.svg'),
+                const SizedBox(width: 8),
+                AppText(
+                  context: context,
+                  text: message,
+                  style: AppTextStyle.font_12,
+                  fontWeight: AppFontWeight.normal,
+                  color: AppColors.primaryWhite,
+                ),
+              ],
+            ),
           ),
-          decoration: BoxDecoration(
-            color: AppColors.primaryRed,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Row(
-            children: [
-              SvgPicture.asset('assets/svg/error.svg'),
-              const SizedBox(width: 8),
-              AppText(
-                context: context,
-                text: message,
-                style: AppTextStyle.font_12,
-                fontWeight: AppFontWeight.normal,
-                color: AppColors.primaryWhite,
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -147,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                             context: context,
                             message: 'Username can\'t Empty',
                           );
-                        } else if (password.isEmpty) {
+                       } else if (password.isEmpty) {
                           errorDialog(
                             context: context,
                             message: 'Password can\'t Empty',
