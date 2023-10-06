@@ -27,6 +27,7 @@ class DioNetworkAuth {
       data: {
         'email': userCredential.email,
         'password': userCredential.password,
+        'bearer_token': 'lsGPLl4k6Vc4J0VhnFaMBqetNtn1ofsB',
       },
     );
     return response;
