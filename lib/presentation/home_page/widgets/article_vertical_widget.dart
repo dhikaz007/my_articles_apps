@@ -114,7 +114,7 @@ class _ArticleVerticalWidgetState extends State<ArticleVerticalWidget> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const ColorShimmer(
                       w: double.maxFinite,
-                      h: 57,
+                      h: 52,
                     );
                   } else {
                     if (snapshot.hasData) {

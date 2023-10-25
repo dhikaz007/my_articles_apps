@@ -92,25 +92,41 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 180,
-                child: BlocBuilder<ArticleBloc, ArticleState>(
-                  builder: (context, state) {
-                    debugPrint('TOP ARTICLE STATE $state');
-                    if (state is ArticleError) {
-                      return Center(
-                        child: AppText(
-                          context: context,
-                          text: state.errorMessage,
-                          style: AppTextStyle.font_20,
-                          fontWeight: AppFontWeight.bold,
-                          color: Colors.red,
+              BlocBuilder<ArticleBloc, ArticleState>(
+                builder: (context, state) {
+                  debugPrint('TOP ARTICLE STATE $state');
+                  if (state is ArticleLoading) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 180,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 20),
+                        itemBuilder: (context, index) => const GradientShimmer(
+                          w: 189,
+                          h: 152,
                         ),
-                      );
-                    }
-                    if (state is ArticleLoaded) {
-                      return ListView.separated(
+                      ),
+                    );
+                  }
+                  if (state is ArticleError) {
+                    return Center(
+                      child: AppText(
+                        context: context,
+                        text: state.errorMessage,
+                        style: AppTextStyle.font_20,
+                        fontWeight: AppFontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    );
+                  }
+                  if (state is ArticleLoaded) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 180,
+                      child: ListView.separated(
                         physics: const ClampingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount: state.article.length,
@@ -120,40 +136,31 @@ class _HomePageState extends State<HomePage> {
                             ArticleHorizontalWidget(
                           articles: state.article[index],
                         ),
-                      );
-                    }
-                    return ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 20),
-                      itemBuilder: (context, index) => const GradientShimmer(
-                        w: 189,
-                        h: 152,
                       ),
                     );
-                  },
-                ),
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                width: widthSize,
-                height: heightSize * 0.65,
-                child: BlocBuilder<ArticleBloc, ArticleState>(
-                  builder: (context, state) {
-                    debugPrint('BOTTOM ARTICLE STATE $state');
-                    if (state is ArticleError) {
-                      Center(
-                        child: AppText(
-                          context: context,
-                          text: state.errorMessage,
-                          style: AppTextStyle.font_20,
-                          fontWeight: AppFontWeight.bold,
-                          color: Colors.red,
-                        ),
-                      );
-                    } else if (state is ArticleLoading) {
-                      return ListView.separated(
+              BlocBuilder<ArticleBloc, ArticleState>(
+                builder: (context, state) {
+                  debugPrint('BOTTOM ARTICLE STATE $state');
+                  if (state is ArticleError) {
+                    Center(
+                      child: AppText(
+                        context: context,
+                        text: state.errorMessage,
+                        style: AppTextStyle.font_20,
+                        fontWeight: AppFontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    );
+                  } else if (state is ArticleLoading) {
+                    return SizedBox(
+                      width: widthSize,
+                      height: heightSize * 0.65,
+                      child: ListView.separated(
                         itemCount: 3,
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 20),
@@ -161,9 +168,13 @@ class _HomePageState extends State<HomePage> {
                           w: double.maxFinite,
                           h: 200,
                         ),
-                      );
-                    } else if (state is ArticleLoaded) {
-                      return ListView.separated(
+                      ),
+                    );
+                  } else if (state is ArticleLoaded) {
+                    return SizedBox(
+                      width: widthSize,
+                      height: heightSize * 0.65,
+                      child: ListView.separated(
                         physics: const ClampingScrollPhysics(),
                         itemCount: state.article.length,
                         separatorBuilder: (context, index) =>
@@ -171,11 +182,11 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) => ArticleVerticalWidget(
                           articles: state.article[index],
                         ),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
             ],
           ),

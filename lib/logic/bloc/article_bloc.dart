@@ -8,29 +8,25 @@ part 'article_event.dart';
 part 'article_state.dart';
 
 class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
-  final ArticlesRepositoryImpl articlesRepositoryImpl;
-  ArticleBloc({required this.articlesRepositoryImpl})
-      : super(ArticleInitial()) {
-    on<ArticleEvent>((event, emit) async {
-      emit(ArticleLoading());
-      try {
-        final article = await articlesRepositoryImpl.getArticles();
-        emit(ArticleLoaded(article: article));
-      } catch (e) {
-        emit(ArticleError(errorMessage: e.toString()));
-      }
-    });
+  ArticleBloc() : super(ArticleInitial()) {
+    final ArticlesRepositoryImpl articlesRepositoryImpl =
+        ArticlesRepositoryImpl();
+    // on<FetchArticle>((event, emit) async {
+    //   emit(ArticleLoading());
+    //   try {
+    //     final article = await articlesRepositoryImpl.getArticles();
+    //     emit(ArticleLoaded(article: article));
+    //   } catch (e) {
+    //     emit(ArticleError(errorMessage: e.toString()));
+    //   }
+    // });
 
     //* For method ResponseAPI
     on<GetArticle>((event, emit) async {
       try {
         emit(ArticleLoading());
         final responseAPI = await articlesRepositoryImpl.loadArticles();
-        if (responseAPI.statusCode == 200) {
-          emit(ArticleLoaded(article: responseAPI.data ?? []));
-        } else {
-          emit(ArticleError(errorMessage: responseAPI.message));
-        }
+        emit(ArticleLoaded(article: responseAPI.data ?? []));
       } catch (e) {
         emit(ArticleError(errorMessage: e.toString()));
       }

@@ -8,7 +8,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'core/constants/constants.dart';
 import 'core/localizations/app_localizations.dart';
-import 'data/repositories/repositories.dart';
 import 'logic/bloc/article_bloc.dart';
 import 'logic/cubit/auth_cubit.dart';
 import 'logic/cubit/language_cubit.dart';
@@ -66,9 +65,7 @@ class _MainAppState extends State<MainApp> {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => PasswordVisibilityCubit()),
-        BlocProvider(
-            create: (context) =>
-                ArticleBloc(articlesRepositoryImpl: ArticlesRepositoryImpl())),
+        BlocProvider(create: (context) => ArticleBloc()),
         BlocProvider(create: (context) => LanguageCubit()),
       ],
       child: GlobalLoaderOverlay(

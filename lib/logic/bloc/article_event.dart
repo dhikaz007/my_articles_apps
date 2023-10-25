@@ -7,7 +7,7 @@ abstract class ArticleEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchArticle extends ArticleEvent {}
+//class FetchArticle extends ArticleEvent {}
 
 //* For method ResponseAPI
 class GetArticle extends ArticleEvent {}
