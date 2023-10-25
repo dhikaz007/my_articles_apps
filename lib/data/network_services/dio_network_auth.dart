@@ -11,7 +11,7 @@ class DioNetworkAuth {
       data: {
         'email': username,
         'password': password,
-        'token': 'lsGPLl4k6Vc4J0VhnFaMBqetNtn1ofsB',
+        //'token': 'lsGPLl4k6Vc4J0VhnFaMBqetNtn1ofsB',
       },
     );
     return response;
@@ -22,13 +22,10 @@ class DioNetworkAuth {
     required String endpoint,
     required UserCredential userCredential,
   }) async {
+    await TokenStoreges.setAccessToken(token: DioNetwork._token);
     final response = await DioNetwork.dio.post(
       endpoint,
-      data: {
-        'email': userCredential.email,
-        'password': userCredential.password,
-        'bearer_token': 'lsGPLl4k6Vc4J0VhnFaMBqetNtn1ofsB',
-      },
+      data: userCredential.toJson(),
     );
     return response;
   }

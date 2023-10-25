@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void loadingOverlay(BuildContext context) {
+  void loadingOverlay(BuildContext context, UserResponse? userResponse) {
     showDialog(
       context: context,
       builder: (context) => Center(
@@ -69,7 +69,9 @@ class _LoginPageState extends State<LoginPage> {
             value: value,
             valueColor: AlwaysStoppedAnimation(AppColors.secondayBlue),
           ),
-          onEnd: () => Modular.to.navigate('/home', arguments: userName),
+          onEnd: () {
+            Modular.to.navigate('/home', arguments: userResponse);
+          },
         ),
       ),
     );
@@ -143,17 +145,18 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       if (auth is AuthError) {
                         //CustomLoadingOverlay.hideLoadingOverlay(context);
-                        // CustomSnackbar.showSnackbar(
-                        //   context,
-                        //   auth.errorMessage,
-                        //   SnackBarStatus.failure,
-                        // );
+                        CustomSnackbar.showSnackbar(
+                          context,
+                          auth.errorMessage,
+                          SnackBarStatus.failure,
+                        );
+
                         if (userName.isEmpty) {
                           errorDialog(
                             context: context,
                             message: 'Username can\'t Empty',
                           );
-                       } else if (password.isEmpty) {
+                        } else if (password.isEmpty) {
                           errorDialog(
                             context: context,
                             message: 'Password can\'t Empty',
@@ -173,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         } else {
                           debugPrint('TOKEN ADA $accessToken');
-                          loadingOverlay(context);
+                          loadingOverlay(context, auth.userResponse);
                           //Modular.to.navigate('/home', arguments: userName);
                         }
                         // CustomLoadingOverlay.hideLoadingOverlay(context);

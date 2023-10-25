@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 //* Model JSON without generator
 
 part of 'model.dart';
@@ -34,5 +35,10 @@ class Articles {
       email: json['user']['email'] ?? '-',
       phoneNumber: json['user']['phone_number'] ?? '-',
     );
+  }
+
+  @override
+  String toString() {
+    return 'Articles(title: $title, content: $content, image: $image, created: $created, views: $views, name: $name, email: $email, phoneNumber: $phoneNumber)';
   }
 }

@@ -16,10 +16,15 @@ class ResponseAPI<T> {
   });
 
   factory ResponseAPI.fromJson(Map<String, dynamic> json) => ResponseAPI(
-        statusCode: json['code'],
-        status: json['status'],
-        message: json['message'],
-        data: json['data'],
-        error: json['errors'],
+        statusCode: json['code'] ?? 0,
+        status: json['status'] ?? false,
+        message: json['message'] ?? '-',
+        data: json['data'] ?? '-',
+        error: json['errors'] ?? '-',
       );
+
+  @override
+  String toString() {
+    return 'ResponseAPI(statusCode: $statusCode, status: $status, message: $message, data: $data, error: $error)';
+  }
 }

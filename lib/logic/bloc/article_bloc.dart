@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/model/model.dart';
 import '../../data/repositories/repositories.dart';
-import '../../utils/utils.dart';
 
 part 'article_event.dart';
 part 'article_state.dart';
@@ -26,8 +25,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     on<GetArticle>((event, emit) async {
       try {
         emit(ArticleLoading());
-        ResponseAPI<List<Articles>> responseAPI =
-            await articlesRepositoryImpl.loadArticles();
+        final responseAPI = await articlesRepositoryImpl.loadArticles();
         if (responseAPI.statusCode == 200) {
           emit(ArticleLoaded(article: responseAPI.data ?? []));
         } else {

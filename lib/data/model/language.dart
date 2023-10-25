@@ -12,6 +12,11 @@ class Language {
     required this.code,
     required this.countryCode,
   });
+
+  @override
+  String toString() {
+    return 'Language(title: $title, lang: $lang, code: $code, countryCode: $countryCode)';
+  }
 }
 
 List<Language> language = [

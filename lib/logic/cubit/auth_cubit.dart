@@ -3,21 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/model/model.dart';
 import '../../data/repositories/repositories.dart';
-import '../../utils/utils.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthRepositoryImpl authRepositoryImpl;
-  AuthCubit({required this.authRepositoryImpl}) : super(AuthInitial());
+  AuthCubit() : super(AuthInitial());
+  final AuthRepositoryImpl authRepositoryImpl = AuthRepositoryImpl();
 
   void loginState({required String userName, required String password}) async {
     try {
-    emit(AuthLoading());
+      emit(AuthLoading());
       final isLogin = await authRepositoryImpl.login(
           username: userName, password: password);
       if (isLogin == true) {
-        emit(const AuthAuthenticated(message: 'Login Successfull'));
+        //emit(const AuthAuthenticated(message: 'Login Successfull'));
       } else {
         emit(const AuthError(
             errorMessage: 'Login failed. Please check your credentials'));
@@ -31,15 +30,10 @@ class AuthCubit extends Cubit<AuthState> {
   void loginEmailandPassword({required UserCredential userCredential}) async {
     try {
       emit(AuthLoading());
-      ResponseAPI responseAPI = await authRepositoryImpl.loginEmailandPassword(
+      final responseAPI = await authRepositoryImpl.loginEmailandPassword(
           userCredential: userCredential);
-      if (responseAPI.statusCode != 200) {
-        emit(AuthError(errorMessage: responseAPI.message));
-      } else {
-        await TokenStoreges.setAccessToken(
-            token: 'lsGPLl4k6Vc4J0VhnFaMBqetNtn1ofsB');
-        emit(AuthAuthenticated(message: responseAPI.message));
-      }
+      emit(AuthAuthenticated(
+          message: responseAPI.message, userResponse: responseAPI.data));
     } catch (e) {
       emit(AuthError(errorMessage: e.toString()));
     }

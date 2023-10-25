@@ -39,19 +39,21 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
   //* For method ResponseAPI
   @override
   Future<ResponseAPI<List<Articles>>> loadArticles() async {
-    List<Articles> dataArticles = [];
     final json = await DioNetworkArticles()
         .fetchArticles(endpoint: ApiEndpoint.articles);
-    if (json.data['articles'] != null) {
-      dataArticles = (json.data['articles'] as List)
+    if (json.data['code'] == 200 && json.data['status'] == true) {
+      debugPrint('ARTICLE CODENYA: ${json.data['code']}');
+      debugPrint('ARTICLE STATUSNYA: ${json.data['status']}');
+      final dataArticles = (json.data['articles'] as List)
           .map((e) => Articles.fromJson(e))
           .toList();
-      json.data['articles'] = dataArticles;
-      return ResponseAPI.fromJson(json.data);
+      return ResponseAPI(message: json.data['message'], data: dataArticles);
     } else {
       return ResponseAPI(
-        message: 'Error load data',
-        statusCode: 500,
+        message: json.data['message'],
+        statusCode: json.data['code'],
+        error: jsonEncode(json.data['errors']),
+        status: json.data['status'],
       );
     }
   }

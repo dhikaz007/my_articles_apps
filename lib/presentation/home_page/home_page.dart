@@ -1,7 +1,7 @@
 part of 'screens.dart';
 
 class HomePage extends StatefulWidget {
-  final String user;
+  final UserResponse user;
   const HomePage({super.key, required this.user});
 
   @override
@@ -14,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getLanguage();
+    BlocProvider.of<ArticleBloc>(context).add(GetArticle());
     super.initState();
   }
 
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         AppText(
                           context: context,
-                          text: ' ${widget.user.split('.').first}',
+                          text: ' ${widget.user.name.split(' ').first}',
                           style: AppTextStyle.font_20,
                           fontWeight: AppFontWeight.bold,
                           color: AppColors.primaryBlack,

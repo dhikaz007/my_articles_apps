@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/constants/constants.dart';
 import '../../core/localizations/app_localizations.dart';
+import '../../data/model/model.dart';
 import '../../helpers/helpers.dart';
 import '../../logic/bloc/article_bloc.dart';
 import '../../widgets/widgets.dart';

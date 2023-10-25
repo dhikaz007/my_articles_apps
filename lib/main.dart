@@ -64,14 +64,11 @@ class _MainAppState extends State<MainApp> {
     Modular.setInitialRoute('/login');
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (context) =>
-                AuthCubit(authRepositoryImpl: AuthRepositoryImpl())),
+        BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => PasswordVisibilityCubit()),
         BlocProvider(
             create: (context) =>
-                ArticleBloc(articlesRepositoryImpl: ArticlesRepositoryImpl())
-                  ..add(GetArticle())),
+                ArticleBloc(articlesRepositoryImpl: ArticlesRepositoryImpl())),
         BlocProvider(create: (context) => LanguageCubit()),
       ],
       child: GlobalLoaderOverlay(
