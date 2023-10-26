@@ -83,8 +83,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SizedBox(width: 8),
                         InkWell(
-                          onTap: () => Modular.to.pushNamed('/select-language'),
-                          child: SvgPicture.asset('assets/svg/globe.svg'),
+                          onTap: () => Modular.to.pushNamed('/profile'),
+                          child: const Icon(Icons.account_circle),
                         ),
                       ],
                     );

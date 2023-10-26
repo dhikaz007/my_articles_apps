@@ -23,5 +23,17 @@ class AppRoutes extends Module {
       transition: TransitionType.rightToLeft,
       duration: const Duration(milliseconds: 800),
     );
+    r.child(
+      '/profile',
+      child: (_) => const ProfilePage(),
+      transition: TransitionType.rightToLeft,
+      duration: const Duration(milliseconds: 800),
+    );
+    r.child(
+      '/profile-detail',
+      child: (_) => const ProfileDetailPage(),
+      transition: TransitionType.rightToLeft,
+      duration: const Duration(milliseconds: 800),
+    );
   }
 }
