@@ -4,5 +4,11 @@
     "password": "Password",
     "login": "Login",
     "welcome": "Welcome",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "profile": "Profile",
+    "userId": "User ID",
+    "name": "Full Name",
+    "email": "Email",
+    "phoneNumber": "Phone Number",
+    "createdOn": "Created On"
 }

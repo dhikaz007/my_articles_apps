@@ -21,4 +21,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Select Language';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get userId => 'User ID';
+
+  @override
+  String get name => 'Full Name';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get createdOn => 'Created On';
 }

@@ -4,5 +4,11 @@
     "password": "Kata Sandi",
     "login": "Masuk",
     "welcome": "Selamat Datang",
-    "selectLanguage": "Pilih Bahasa"
+    "selectLanguage": "Pilih Bahasa",
+    "profile": "Profil",
+    "userId": "Identitas Pengguna",
+    "name": "Nama Lengkap",
+    "email": "Surel",
+    "phoneNumber": "Nomor Telepon",
+    "createdOn": "Dibuat Pada"
 }

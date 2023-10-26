@@ -24,7 +24,7 @@ class ProfilePage extends StatelessWidget {
                   const Spacer(),
                   AppText(
                     context: context,
-                    text: 'Profile',
+                    text: '${AppLocalizations.of(context)?.profile}',
                     style: AppTextStyle.font_20,
                     fontWeight: AppFontWeight.bold,
                     color: AppColors.primaryBlack,
@@ -40,7 +40,7 @@ class ProfilePage extends StatelessWidget {
               ListTile(
                 title: AppText(
                   context: context,
-                  text: 'Profile',
+                  text: '${AppLocalizations.of(context)?.profile}',
                   style: AppTextStyle.font_16,
                   fontWeight: AppFontWeight.medium,
                   color: AppColors.primaryBlack,
@@ -55,7 +55,7 @@ class ProfilePage extends StatelessWidget {
               ListTile(
                 title: AppText(
                   context: context,
-                  text: 'Select Language',
+                  text: '${AppLocalizations.of(context)?.selectLanguage}',
                   style: AppTextStyle.font_16,
                   fontWeight: AppFontWeight.medium,
                   color: AppColors.primaryBlack,

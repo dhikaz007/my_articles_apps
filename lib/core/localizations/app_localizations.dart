@@ -128,6 +128,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Language'**
   String get selectLanguage;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @userId.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID'**
+  String get userId;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get name;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @createdOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Created On'**
+  String get createdOn;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

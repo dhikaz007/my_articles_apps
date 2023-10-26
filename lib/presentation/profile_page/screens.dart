@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/constants/constants.dart';
 import '../../logic/cubit/auth_cubit.dart';
+import '../../core/localizations/app_localizations.dart';
 
 part 'profile_page.dart';
 part 'profile_detail_page.dart';

@@ -42,7 +42,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                         decoration: InputDecoration(
                           label: AppText(
                             context: context,
-                            text: 'User ID',
+                            text: '${AppLocalizations.of(context)?.userId}',
                             style: AppTextStyle.font_16,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.primaryGreen,
@@ -62,7 +62,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                         decoration: InputDecoration(
                           label: AppText(
                             context: context,
-                            text: 'Name',
+                            text: '${AppLocalizations.of(context)?.name}',
                             style: AppTextStyle.font_16,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.primaryGreen,
@@ -82,7 +82,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                         decoration: InputDecoration(
                           label: AppText(
                             context: context,
-                            text: 'Email',
+                            text: '${AppLocalizations.of(context)?.email}',
                             style: AppTextStyle.font_16,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.primaryGreen,
@@ -102,7 +102,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                         decoration: InputDecoration(
                           label: AppText(
                             context: context,
-                            text: 'Phone Number',
+                            text:
+                                '${AppLocalizations.of(context)?.phoneNumber}',
                             style: AppTextStyle.font_16,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.primaryGreen,
@@ -121,7 +122,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                         decoration: InputDecoration(
                           label: AppText(
                             context: context,
-                            text: 'Created',
+                            text: '${AppLocalizations.of(context)?.createdOn}',
                             style: AppTextStyle.font_16,
                             fontWeight: AppFontWeight.medium,
                             color: AppColors.primaryGreen,

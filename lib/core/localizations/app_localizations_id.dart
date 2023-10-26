@@ -21,4 +21,22 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Pilih Bahasa';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get userId => 'Identitas Pengguna';
+
+  @override
+  String get name => 'Nama Lengkap';
+
+  @override
+  String get email => 'Surel';
+
+  @override
+  String get phoneNumber => 'Nomor Telepon';
+
+  @override
+  String get createdOn => 'Dibuat Pada';
 }
