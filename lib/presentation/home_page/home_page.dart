@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                   if (state is ArticleLoading) {
                     return SizedBox(
                       width: double.infinity,
-                      height: 180,
+                      height: 220,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: 3,
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                   if (state is ArticleLoaded) {
                     return SizedBox(
                       width: double.infinity,
-                      height: 180,
+                      height: 220,
                       child: ListView.separated(
                         physics: const ClampingScrollPhysics(),
                         scrollDirection: Axis.horizontal,

@@ -35,5 +35,12 @@ class AppRoutes extends Module {
       transition: TransitionType.rightToLeft,
       duration: const Duration(milliseconds: 800),
     );
+    r.child(
+      '/theme',
+      child: (_) => const ThemePage(),
+      transition: TransitionType.rightToLeft,
+      duration: const Duration(milliseconds: 800),
+    );
+    
   }
 }

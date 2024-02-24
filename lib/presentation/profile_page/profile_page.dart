@@ -67,6 +67,21 @@ class ProfilePage extends StatelessWidget {
                   iconSize: 28,
                 ),
               ),
+              ListTile(
+                title: AppText(
+                  context: context,
+                  text: '${AppLocalizations.of(context)?.selectLanguage}',
+                  style: AppTextStyle.font_16,
+                  fontWeight: AppFontWeight.medium,
+                  color: AppColors.primaryBlack,
+                ),
+                leading: SvgPicture.asset('assets/svg/globe.svg'),
+                trailing: IconButton(
+                  onPressed: () => Modular.to.pushNamed('/theme'),
+                  icon: const Icon(Icons.keyboard_arrow_right),
+                  iconSize: 28,
+                ),
+              ),
             ],
           ),
         ),

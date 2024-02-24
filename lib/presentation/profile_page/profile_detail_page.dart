@@ -8,6 +8,19 @@ class ProfileDetailPage extends StatefulWidget {
 }
 
 class _ProfileDetailPageState extends State<ProfileDetailPage> {
+  String code = 'en';
+
+  @override
+  void initState() {
+    super.initState();
+    getLanguage();
+  }
+
+  void getLanguage() async {
+    code = await GetLanguage.currentLanguage();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,6 +28,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
+          visualDensity: VisualDensity.compact,
           onPressed: () => Modular.to.pop(),
           icon: const Icon(Icons.arrow_back),
           color: Colors.black,
@@ -30,8 +44,14 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 if (state is AuthAuthenticated) {
-                  final dateFormated = DateFormat('y/M/d EEE')
-                      .format(state.userResponse?.created ?? DateTime.now());
+                  String dateFormated = '';
+                  if (code == 'id_ID') {
+                    dateFormated = DateFormat('y/M/d EEE', 'ID')
+                        .format(state.userResponse?.created ?? DateTime.now());
+                  } else {
+                    dateFormated = DateFormat('y/M/d EEE')
+                        .format(state.userResponse?.created ?? DateTime.now());
+                  }
                   return Column(
                     children: [
                       TextField(

@@ -4,5 +4,6 @@ import '../presentation/home_page/screens.dart';
 import '../presentation/language/screens.dart';
 import '../presentation/login_page/screens.dart';
 import '../presentation/profile_page/screens.dart';
+import '../presentation/theme/screens.dart';
 
 part 'app_routes.dart';

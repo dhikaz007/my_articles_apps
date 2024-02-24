@@ -20,7 +20,6 @@ class InputLoginWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       width: double.maxFinite,
-      height: 64,
       decoration: BoxDecoration(
         color: AppColors.primaryGreen.withAlpha(30),
         borderRadius: BorderRadius.circular(5),

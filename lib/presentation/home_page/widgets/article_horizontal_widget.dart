@@ -30,7 +30,7 @@ class _ArticleHorizontalWidgetState extends State<ArticleHorizontalWidget> {
     return Container(
       padding: const EdgeInsets.all(8),
       width: 210,
-      height: 200,
+      //height: 220,
       decoration: BoxDecoration(
         color: AppColors.primaryWhite,
         borderRadius: BorderRadius.circular(10),

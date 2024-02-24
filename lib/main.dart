@@ -12,6 +12,7 @@ import 'logic/bloc/article_bloc.dart';
 import 'logic/cubit/auth_cubit.dart';
 import 'logic/cubit/language_cubit.dart';
 import 'logic/cubit/password_visibility_cubit.dart';
+import 'logic/cubit/theme_cubit.dart';
 import 'presentation/login_page/screens.dart';
 import 'routes/routes.dart';
 import 'utils/utils.dart';
@@ -67,12 +68,12 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => PasswordVisibilityCubit()),
         BlocProvider(create: (context) => ArticleBloc()),
         BlocProvider(create: (context) => LanguageCubit()),
+        BlocProvider(create: (context) => ThemeCubit()),
       ],
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
-        overlayOpacity: 0.8,
-        overlayColor: Colors.grey.withOpacity(0.3),
-        overlayWidget: Center(
+        overlayColor: Colors.grey.withOpacity(0.8),
+        overlayWidgetBuilder: (progress) => Center(
           child: Container(
             width: 100,
             height: 100,
@@ -99,7 +100,12 @@ class _MainAppState extends State<MainApp> {
                 return MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   themeAnimationCurve: Curves.easeInOut,
-                  theme: ThemeData(fontFamily: 'Inter'),
+                  theme: ThemeData(
+                    fontFamily: 'Inter',
+                    useMaterial3: true,
+                    colorScheme: ColorScheme.fromSeed(
+                        seedColor: Colors.deepPurpleAccent),
+                  ),
                   routerConfig: Modular.routerConfig,
                   localizationsDelegates: const [
                     //* Add localization to app
@@ -120,7 +126,12 @@ class _MainAppState extends State<MainApp> {
                 return MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   themeAnimationCurve: Curves.easeInOut,
-                  theme: ThemeData(fontFamily: 'Inter'),
+                  theme: ThemeData(
+                    fontFamily: 'Inter',
+                    useMaterial3: true,
+                    colorScheme: ColorScheme.fromSeed(
+                        seedColor: Colors.deepPurpleAccent),
+                  ),
                   routerConfig: Modular.routerConfig,
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
