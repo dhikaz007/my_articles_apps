@@ -4,16 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'core/constants/constants.dart';
-import 'core/localizations/app_localizations.dart';
-import 'logic/bloc/article_bloc.dart';
-import 'logic/cubit/auth_cubit.dart';
-import 'logic/cubit/language_cubit.dart';
-import 'logic/cubit/password_visibility_cubit.dart';
-import 'logic/cubit/theme_cubit.dart';
-import 'presentation/login_page/screens.dart';
+import 'constants/constants.dart';
+import 'feature/auth/cubit/auth_cubit.dart';
+import 'localizations/app_localizations.dart';
 import 'routes/routes.dart';
 import 'utils/utils.dart';
 
@@ -65,10 +59,6 @@ class _MainAppState extends State<MainApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
-        BlocProvider(create: (context) => PasswordVisibilityCubit()),
-        BlocProvider(create: (context) => ArticleBloc()),
-        BlocProvider(create: (context) => LanguageCubit()),
-        BlocProvider(create: (context) => ThemeCubit()),
       ],
       child: GlobalLoaderOverlay(
         useDefaultLoading: false,
@@ -87,70 +77,27 @@ class _MainAppState extends State<MainApp> {
             ),
           ),
         ),
-        child: ResponsiveSizer(
-          builder: (context, orientation, screenType) =>
-              BlocBuilder<LanguageCubit, LanguageState>(
-            builder: (context, state) {
-              if (state is LanguageInitial) {
-                if (code != null) {
-                  ReadContext(context)
-                      .read<LanguageCubit>()
-                      .setLanguage(Locale(code ?? 'en', countryCode ?? 'US'));
-                }
-                return MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  themeAnimationCurve: Curves.easeInOut,
-                  theme: ThemeData(
-                    fontFamily: 'Inter',
-                    useMaterial3: true,
-                    colorScheme: ColorScheme.fromSeed(
-                        seedColor: Colors.deepPurpleAccent),
-                  ),
-                  routerConfig: Modular.routerConfig,
-                  localizationsDelegates: const [
-                    //* Add localization to app
-                    AppLocalizations
-                        .delegate, //* build in terminal flutter gen-l10n
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en', 'US'),
-                    Locale('id', 'ID'),
-                  ],
-                  locale: ReadContext(context).read<LanguageCubit>().locale,
-                );
-              }
-              if (state is ChangeLanguageSuccess) {
-                return MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  themeAnimationCurve: Curves.easeInOut,
-                  theme: ThemeData(
-                    fontFamily: 'Inter',
-                    useMaterial3: true,
-                    colorScheme: ColorScheme.fromSeed(
-                        seedColor: Colors.deepPurpleAccent),
-                  ),
-                  routerConfig: Modular.routerConfig,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en', 'US'),
-                    Locale('id', 'ID'),
-                  ],
-                  locale: ReadContext(context).read<LanguageCubit>().locale,
-                );
-              }
-              return const MaterialApp(
-                home: LoginPage(),
-              );
-            },
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          themeAnimationCurve: Curves.easeInOut,
+          theme: ThemeData(
+            fontFamily: 'Inter',
+            useMaterial3: true,
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent),
           ),
+          routerConfig: Modular.routerConfig,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('id', 'ID'),
+          ],
+          //locale: ReadContext(context).read<LanguageCubit>().locale,
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-import '../core/constants/constants.dart';
+import '../constants/constants.dart';
 import '../utils/utils.dart';
 
 part 'get_language.dart';

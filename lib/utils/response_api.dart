@@ -3,7 +3,7 @@ part of 'utils.dart';
 class ResponseAPI<T> {
   final int? statusCode;
   final bool? status;
-  final String message;
+  final String? message;
   final T? data;
   final String? error;
 
